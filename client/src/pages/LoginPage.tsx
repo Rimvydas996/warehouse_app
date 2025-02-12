@@ -9,7 +9,7 @@ import { apiGetAll } from "../api/api";
 const LoginPage = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { login, user, logout } = useAuth();
+  const { login } = useAuth();
   console.log("loginpage");
 
   const [inputs, setInputs] = useState<{ email: string; password: string }>({ email: "", password: "" });

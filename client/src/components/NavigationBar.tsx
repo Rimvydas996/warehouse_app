@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { isAuth } from "../services/LoginService";
+import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 
 export default function NavigationBar(): JSX.Element {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
-  const authenticated = isAuth();
+  const { isAuthenticated } = useAuth();
   // className = "flex justify-between p-4 my-4 bg-amber-400";
   return (
     <div className="flex justify-between p-4 my-4 bg-amber-400">
@@ -14,7 +14,7 @@ export default function NavigationBar(): JSX.Element {
         Warehouse
       </h3>
       <ul className="flex gap-3">
-        {authenticated ? (
+        {isAuthenticated ? (
           <>
             <li className="bg-amber-200 p-0.5 border-4 rounded-2xl ">Products</li>
             <li onClick={() => navigate("/")} className="bg-amber-200 p-0.5 border-4 rounded-2xl  border-amber-700">
@@ -22,7 +22,7 @@ export default function NavigationBar(): JSX.Element {
             </li>
           </>
         ) : (
-          !authenticated && (
+          !isAuthenticated && (
             <>
               <li
                 onClick={() => navigate("/register")}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "../components/Form";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,16 @@ import { apiGetAll } from "../api/api";
 const LoginPage = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, getToken } = useAuth();
+  useEffect(() => {
+    const token = getToken();
+    const data = apiGetAll(token);
+    console.log("data", data);
+
+    if (token) {
+      navigate("/");
+    }
+  }, []);
   console.log("loginpage");
 
   const [inputs, setInputs] = useState<{ email: string; password: string }>({ email: "", password: "" });
@@ -21,9 +30,8 @@ const LoginPage = (): JSX.Element => {
         setError("Incorrect email or password");
       } else navigate("/");
       setInputs({ email: "", password: "" });
-      // testavimui
-      const data = apiGetAll();
-      console.log(data);
+      const token = getToken();
+      console.log("apiGetAll", apiGetAll(token));
     } catch (error) {
       const errorMassage = error instanceof AxiosError ? error.response?.data.message : "Unknown error";
 

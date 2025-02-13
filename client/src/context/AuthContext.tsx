@@ -1,21 +1,9 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { apiLogin } from "../api/api";
 import LoginResponseInterface from "../model/LoginResponseInterface";
 import UserInterface from "../model/UserInterface";
-
-interface CredentialsInterface {
-  email: string;
-  password: string;
-}
-
-interface AuthContextInterface {
-  isAuthenticated: boolean;
-  user: UserInterface | null;
-  login: (inputs: CredentialsInterface) => Promise<boolean>;
-  logout: () => void;
-  getToken: () => string | null;
-  getUserData: () => UserInterface | null;
-}
+import CredentialsInterface from "../model/CredentialsInterface";
+import AuthContextInterface from "../model/AuthContextInterface";
 
 export const AuthContext = createContext<AuthContextInterface>({
   isAuthenticated: false,
@@ -27,17 +15,30 @@ export const AuthContext = createContext<AuthContextInterface>({
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  useEffect(() => {
+    const token = getToken();
+
+    if (token) {
+      const user = getUserData();
+      if (user) {
+        setIsAuthenticated(true);
+        setUser(user);
+      }
+    }
+    return () => {
+      setIsAuthenticated(false);
+      setUser(null);
+    };
+  }, []);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<UserInterface | null>(null);
   const getToken = (): string | null => localStorage.getItem("token");
 
   const getUserData = (): UserInterface | null => {
-    console.log("auth");
     const user = localStorage.getItem("user");
     if (!user) {
       return null;
     }
-    console.log("isAuth user reiksme", user);
     return JSON.parse(user);
   };
   const login = async (inputs: CredentialsInterface): Promise<boolean> => {

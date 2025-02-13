@@ -1,5 +1,6 @@
 import axios from "axios";
 import LoginResponseInterface from "../model/LoginResponseInterface";
+import ProductInterface from "../model/ProductInterface";
 
 interface LoginData {
   email: string;
@@ -21,8 +22,8 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
   }
   return false;
 }
-function apiGetAll() {
-  const token = localStorage.getItem("token");
+
+async function apiGetAll(token: string | null): Promise<ProductInterface[]> {
   axios
     .get("http://localhost:3001/warehouse", {
       headers: {
@@ -30,8 +31,12 @@ function apiGetAll() {
       },
     })
     .then((response) => {
-      console.log(response);
+      console.log("response", response);
+      const productData: ProductInterface[] = response.data;
+      return productData;
+      //  response.data;
     });
+  return [];
 }
 
 export { apiLogin, apiGetAll };

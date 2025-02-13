@@ -4,7 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import { ThemeProvider } from "./context/ThemeContext";
 import PrivateRoute from "./routes/PrivateRoute";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import PrductsPage from "./pages/ProductsPage";
 // import { isAuth } from "./services/LoginService";
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -20,20 +21,23 @@ function App() {
   //       // navigate("/login"); i errorPage
   //     }
   //   }, []);
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="bg-amber-50">
       <ThemeProvider>
         <AuthProvider>
+          <p>{isAuthenticated ? "Authorized" : "Unauthorized"}</p>
           <Suspense fallback={<div className="text-lg">Kraunama...</div>}>
             <NavigationBar />
             <Routes>
-              {/* <Route path="/" element={<HomePage />} /> */}
+              <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route
-                path="/"
+                path="/products"
                 element={
                   <PrivateRoute>
-                    <HomePage />
+                    <PrductsPage />
                   </PrivateRoute>
                 }
               />

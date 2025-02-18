@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import { ThemeProvider } from "./context/ThemeContext";

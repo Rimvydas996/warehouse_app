@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
@@ -16,10 +15,16 @@ export default function NavigationBar(): JSX.Element {
       <ul className="flex gap-3">
         {isAuthenticated ? (
           <>
-            <li onClick={() => navigate("/products")} className="bg-amber-200 p-0.5 border-4 rounded-2xl ">
+            <li
+              onClick={() => navigate("/products")}
+              className="bg-amber-200 p-0.5 border-4 rounded-2xl "
+            >
               Products
             </li>
-            <li onClick={() => navigate("/")} className="bg-amber-200 p-0.5 border-4 rounded-2xl  border-amber-700">
+            <li
+              onClick={() => navigate("/")}
+              className="bg-amber-200 p-0.5 border-4 rounded-2xl  border-amber-700"
+            >
               Logout
             </li>
           </>

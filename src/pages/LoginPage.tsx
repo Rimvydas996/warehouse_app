@@ -3,7 +3,6 @@ import Form from "../components/Form";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
-import { AuthContext } from "../context/AuthContext";
 import { apiGetAll } from "../api/api";
 
 const LoginPage = (): JSX.Element => {

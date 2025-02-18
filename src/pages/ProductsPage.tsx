@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiGetAll } from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import ProductInterface from "../model/ProductInterface";

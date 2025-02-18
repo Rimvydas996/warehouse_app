@@ -1,6 +1,7 @@
 export default interface ProductInterface {
-  title: "naujas testass testas";
-  quantity: 11;
-  supplyStatus: true;
-  storageLocation: "C-01-01";
+  title: string;
+  quantity: number;
+  supplyStatus: boolean;
+  storageLocation: string;
+  _id: string;
 }

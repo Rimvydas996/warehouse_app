@@ -3,25 +3,21 @@ import Form from "../components/Form";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
-// testavimui
+import { AuthContext } from "../context/AuthContext";
 import { apiGetAll } from "../api/api";
 
 const LoginPage = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { login, getToken } = useAuth();
+  const { login, getToken, isAuthenticated } = useAuth();
   useEffect(() => {
-    const token = getToken();
-    const data = apiGetAll(token);
-    console.log("data", data);
-
-    if (token) {
-      navigate("/");
-    }
+    !isAuthenticated && navigate("/login");
   }, []);
-  console.log("loginpage");
 
-  const [inputs, setInputs] = useState<{ email: string; password: string }>({ email: "", password: "" });
+  const [inputs, setInputs] = useState<{ email: string; password: string }>({
+    email: "",
+    password: "",
+  });
   const loginHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     try {
       event.preventDefault();
@@ -33,7 +29,8 @@ const LoginPage = (): JSX.Element => {
       const token = getToken();
       console.log("apiGetAll", apiGetAll(token));
     } catch (error) {
-      const errorMassage = error instanceof AxiosError ? error.response?.data.message : "Unknown error";
+      const errorMassage =
+        error instanceof AxiosError ? error.response?.data.message : "Unknown error";
 
       setError(errorMassage);
     }

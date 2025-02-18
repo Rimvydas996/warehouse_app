@@ -24,19 +24,17 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
 }
 
 async function apiGetAll(token: string | null): Promise<ProductInterface[]> {
-  axios
-    .get("http://localhost:3001/warehouse", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => {
-      console.log("response", response);
-      const productData: ProductInterface[] = response.data;
-      return productData;
-      //  response.data;
-    });
-  return [];
+  let productData: ProductInterface[] = [];
+  const request = await axios.get("http://localhost:3001/warehouse", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (request.status >= 200 && request.status < 300) {
+    productData = request.data;
+  }
+
+  return productData;
 }
 
 export { apiLogin, apiGetAll };

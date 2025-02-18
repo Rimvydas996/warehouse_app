@@ -6,6 +6,15 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "client/dist"
+      },
+      "build": {
+        "env": {
+          "NODE_ENV": "production"
+        },
+        "commands": {
+          "install": "npm install",
+          "build": "npm run build"
+        }
       }
     }
   ],
@@ -14,14 +23,5 @@
       "src": "/(.*)",
       "dest": "/client/index.html"
     }
-  ],
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
-    },
-    "commands": {
-      "install": "npm install",
-      "build": "npm run build"
-    }
-  }
+  ]
 }

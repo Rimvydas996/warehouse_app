@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import { ThemeProvider } from "./context/ThemeContext";
 import PrivateRoute from "./routes/PrivateRoute";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import PrductsPage from "./pages/ProductsPage";
 // import { isAuth } from "./services/LoginService";
 const LoginPage = lazy(() => import("./pages/LoginPage"));

@@ -57,10 +57,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    return true;
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login: login, logout, getToken, getUserData }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, login: login, logout, getToken, getUserData }}
+    >
       {children}
     </AuthContext.Provider>
   );

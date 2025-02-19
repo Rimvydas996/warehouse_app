@@ -27,7 +27,6 @@ function App() {
     <div className="bg-amber-50">
       <ThemeProvider>
         <AuthProvider>
-          <p>{isAuthenticated ? "Authorized" : "Unauthorized"}</p>
           <Suspense fallback={<div className="text-lg">Kraunama...</div>}>
             <NavigationBar />
             <Routes>

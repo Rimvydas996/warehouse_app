@@ -5,25 +5,57 @@ import { useTheme } from "../context/ThemeContext";
 export default function NavigationBar(): JSX.Element {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-  // className = "flex justify-between p-4 my-4 bg-amber-400";
+  const { isAuthenticated, logout } = useAuth();
+
   return (
-    <div className="flex justify-between p-4 my-4 bg-amber-400">
-      <h3 onClick={() => navigate("/")} className="bg-amber-200 self-center text-amber-900">
+    <div
+      className={`
+      flex justify-between items-center p-4 my-4 
+      bg-gradient-to-r from-amber-400 to-amber-300
+      shadow-lg rounded-lg mx-4
+    `}
+    >
+      <h3
+        onClick={() => navigate("/")}
+        className="
+          text-amber-900 text-xl font-bold
+          hover:text-amber-700 cursor-pointer
+          transition-colors duration-200
+          px-4 py-2 rounded-lg
+        "
+      >
         Warehouse
       </h3>
-      <ul className="flex gap-3">
+
+      <ul className="flex gap-4 items-center">
         {isAuthenticated ? (
           <>
             <li
               onClick={() => navigate("/products")}
-              className="bg-amber-200 p-0.5 border-4 rounded-2xl "
+              className="
+                bg-amber-200 px-4 py-2
+                rounded-lg border-2 border-amber-500
+                hover:bg-amber-300 cursor-pointer
+                transition-all duration-200
+                font-medium text-amber-900
+                hover:shadow-md
+              "
             >
               Products
             </li>
             <li
-              onClick={() => navigate("/")}
-              className="bg-amber-200 p-0.5 border-4 rounded-2xl  border-amber-700"
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
+              className="
+                bg-amber-200 px-4 py-2
+                rounded-lg border-2 border-amber-500
+                hover:bg-amber-300 cursor-pointer
+                transition-all duration-200
+                font-medium text-amber-900
+                hover:shadow-md
+              "
             >
               Logout
             </li>
@@ -33,13 +65,27 @@ export default function NavigationBar(): JSX.Element {
             <>
               <li
                 onClick={() => navigate("/register")}
-                className="bg-amber-200 p-0.5 border-4 rounded-2xl  border-amber-700"
+                className="
+                  bg-amber-200 px-4 py-2
+                  rounded-lg border-2 border-amber-500
+                  hover:bg-amber-300 cursor-pointer
+                  transition-all duration-200
+                  font-medium text-amber-900
+                  hover:shadow-md
+                "
               >
                 Register
               </li>
               <li
                 onClick={() => navigate("/login")}
-                className="bg-amber-200 p-0.5 border-4 rounded-2xl  border-amber-700"
+                className="
+                  bg-amber-200 px-4 py-2
+                  rounded-lg border-2 border-amber-500
+                  hover:bg-amber-300 cursor-pointer
+                  transition-all duration-200
+                  font-medium text-amber-900
+                  hover:shadow-md
+                "
               >
                 Login
               </li>

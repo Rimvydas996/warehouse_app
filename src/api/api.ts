@@ -9,7 +9,10 @@ interface LoginData {
 
 async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterface | false> {
   try {
-    const response = await axios.post("http://localhost:3001/auth/login", submittedData);
+    const response = await axios.post(
+      "https://warehouse-liart.vercel.app/auth/login",
+      submittedData
+    );
     if (response.status >= 200 && response.status < 300) {
       const data = response.data;
       if (typeof data === "object") {
@@ -25,7 +28,7 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
 
 async function apiGetAll(token: string | null): Promise<ProductInterface[]> {
   let productData: ProductInterface[] = [];
-  const request = await axios.get("http://localhost:3001/warehouse", {
+  const request = await axios.get("https://warehouse-liart.vercel.app/warehouse", {
     headers: {
       Authorization: `Bearer ${token}`,
     },

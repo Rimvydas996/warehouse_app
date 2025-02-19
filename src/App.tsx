@@ -21,7 +21,7 @@ function App() {
   //       // navigate("/login"); i errorPage
   //     }
   //   }, []);
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
 
   return (
     <div className="bg-amber-50">

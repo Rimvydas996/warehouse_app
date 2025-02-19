@@ -2,6 +2,8 @@ import axios from "axios";
 import LoginResponseInterface from "../model/LoginResponseInterface";
 import ProductInterface from "../model/ProductInterface";
 
+const API_BASE_URL = "https://warehouse-liart.vercel.app";
+
 interface LoginData {
   email: string;
   password: string;
@@ -9,18 +11,26 @@ interface LoginData {
 
 async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterface | false> {
   try {
-    const response = await axios.post(
-      "https://warehouse-liart.vercel.app/auth/login",
-      submittedData
-    );
+    const response = await axios.post(`${API_BASE_URL}/auth/login`, submittedData, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      withCredentials: true, // This is important for CORS
+    });
+
+    console.log("Response status:", response.status);
+    console.log("Response data:", response.data);
+
     if (response.status >= 200 && response.status < 300) {
-      const data = response.data;
-      if (typeof data === "object") {
-        return data;
-      }
+      return response.data;
     }
-  } catch (error) {
-    console.error("Login error:", error);
+  } catch (error: any) {
+    console.error("Login error details:", {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+    });
     throw error;
   }
   return false;
@@ -28,13 +38,26 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
 
 async function apiGetAll(token: string | null): Promise<ProductInterface[]> {
   let productData: ProductInterface[] = [];
-  const request = await axios.get("https://warehouse-liart.vercel.app/warehouse", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (request.status >= 200 && request.status < 300) {
-    productData = request.data;
+  try {
+    const request = await axios.get(`${API_BASE_URL}/warehouse`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      withCredentials: true,
+    });
+
+    if (request.status >= 200 && request.status < 300) {
+      productData = request.data;
+    }
+  } catch (error: any) {
+    console.error("Get all error:", {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+    });
+    throw error;
   }
 
   return productData;

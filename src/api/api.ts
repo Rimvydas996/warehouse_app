@@ -63,4 +63,6 @@ async function apiGetAll(token: string | null): Promise<ProductInterface[]> {
   return productData;
 }
 
+// async function ajustQuantity(token: string | null, productId: string, quantity: number) {
+
 export { apiLogin, apiGetAll };

@@ -1,8 +1,8 @@
 export default interface UserInterface {
-  _id: "";
-  email: "";
-  role: "";
-  premission: [];
+  _id: string;
+  email: string;
+  role: string;
+  premission: any[];
   createdAt: Date;
   updatedAt: Date;
 }

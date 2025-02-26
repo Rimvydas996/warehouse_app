@@ -26,7 +26,7 @@ const mockUser: UserInterface = {
 };
 
 describe("apiLogin", () => {
-  const originalConsoleLog = console.log;
+const originalConsoleLog = console.log;
   const originalConsoleError = console.error;
 
   beforeAll(() => {
@@ -98,7 +98,7 @@ describe("apiLogin", () => {
 });
 
 describe("apiGetAll", () => {
-  const originalConsoleLog = console.log;
+const originalConsoleLog = console.log;
   const originalConsoleError = console.error;
 
   beforeAll(() => {

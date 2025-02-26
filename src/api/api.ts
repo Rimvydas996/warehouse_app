@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import LoginResponseInterface from "../model/LoginResponseInterface";
 import ProductInterface from "../model/ProductInterface";
 
@@ -25,12 +25,14 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
     if (response.status >= 200 && response.status < 300) {
       return response.data;
     }
-  } catch (error: any) {
-    console.error("Login error details:", {
-      message: error.message,
-      status: error.response?.status,
-      data: error.response?.data,
-    });
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Login error details:", {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+    }
     throw error;
   }
   return false;
@@ -51,12 +53,14 @@ async function apiGetAll(token: string | null): Promise<ProductInterface[]> {
     if (request.status >= 200 && request.status < 300) {
       productData = request.data;
     }
-  } catch (error: any) {
-    console.error("Get all error:", {
-      message: error.message,
-      status: error.response?.status,
-      data: error.response?.data,
-    });
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Get all error:", {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+    }
     throw error;
   }
 

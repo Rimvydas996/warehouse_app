@@ -46,7 +46,6 @@ export default function NavigationBar(): JSX.Element {
             <li
               onClick={() => {
                 logout();
-                navigate("/");
               }}
               className="
                 bg-amber-200 px-4 py-2

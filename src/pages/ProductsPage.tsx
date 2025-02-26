@@ -18,8 +18,7 @@ export default function ProductsPage() {
   }, []);
 
   const HandleMore = () => {
-    !more ? setMore(true) : setMore(false);
-    console.log(more);
+    setMore(!more);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

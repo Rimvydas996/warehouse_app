@@ -1,8 +1,12 @@
+export interface Permission {
+  type: string;
+}
+
 export default interface UserInterface {
   _id: string;
   email: string;
   role: string;
-  premission: any[];
+  premission: Permission[];
   createdAt: Date;
   updatedAt: Date;
 }

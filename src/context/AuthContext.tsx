@@ -4,6 +4,7 @@ import LoginResponseInterface from "../model/LoginResponseInterface";
 import UserInterface from "../model/UserInterface";
 import CredentialsInterface from "../model/CredentialsInterface";
 import AuthContextInterface from "../model/AuthContextInterface";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext<AuthContextInterface>({
   isAuthenticated: false,
@@ -15,6 +16,8 @@ export const AuthContext = createContext<AuthContextInterface>({
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const token = getToken();
 
@@ -60,7 +63,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setIsAuthenticated(false);
-    return true;
+    navigate("/login");
   };
 
   return (

@@ -1,27 +1,22 @@
 import "./App.css";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import { ThemeProvider } from "./context/ThemeContext";
 import PrivateRoute from "./routes/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import PrductsPage from "./pages/ProductsPage";
-// import { isAuth } from "./services/LoginService";
+import { useAuth } from "./context/AuthContext";
+import { setTokenGetter } from "./services/auth-service";
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 
 function App() {
-  //   const navigate = useNavigate();
+  const { getToken } = useAuth();
 
-  //   useEffect(() => {
-  //     try {
-  //       isAuth() ? navigate("/") : navigate("/login");
-  //     } catch (error) {
-  //       console.error("Error retrieving token:", error);
-  //       // navigate("/login"); i errorPage
-  //     }
-  //   }, []);
-  // const { isAuthenticated } = useAuth();
+  useEffect(() => {
+    setTokenGetter(getToken);
+  }, [getToken]);
 
   return (
     <div className="bg-amber-50">

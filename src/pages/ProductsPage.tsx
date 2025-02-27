@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { apiGetAll } from "../api/api";
-import { useAuth } from "../context/AuthContext";
 import ProductInterface from "../model/ProductInterface";
 import { ExpandLess, MoreVert } from "@mui/icons-material";
 
@@ -8,11 +7,9 @@ export default function ProductsPage() {
   const [input, setInput] = useState<string>("");
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [more, setMore] = useState<boolean>(false);
-  const { getToken } = useAuth();
 
   useEffect(() => {
-    const token = getToken();
-    apiGetAll(token).then((data) => {
+    apiGetAll().then((data) => {
       setProducts(data);
     });
   }, []);

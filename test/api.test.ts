@@ -1,12 +1,15 @@
 /// <reference types="jest" />
 import { apiLogin, apiGetAll } from "../src/api/api";
+import * as authService from "../src/services/auth-service";
 import axios from "axios";
 import LoginResponseInterface from "../src/model/LoginResponseInterface";
 import ProductInterface from "../src/model/ProductInterface";
 import UserInterface from "../src/model/UserInterface";
 
 jest.mock("axios");
+jest.mock("../src/services/auth-service");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+const mockedAuthService = authService as jest.Mocked<typeof authService>;
 
 const mockToken = "mock-token";
 const baseURL = "https://warehouse-liart.vercel.app";
@@ -26,7 +29,7 @@ const mockUser: UserInterface = {
 };
 
 describe("apiLogin", () => {
-const originalConsoleLog = console.log;
+  const originalConsoleLog = console.log;
   const originalConsoleError = console.error;
 
   beforeAll(() => {
@@ -98,7 +101,7 @@ const originalConsoleLog = console.log;
 });
 
 describe("apiGetAll", () => {
-const originalConsoleLog = console.log;
+  const originalConsoleLog = console.log;
   const originalConsoleError = console.error;
 
   beforeAll(() => {
@@ -113,6 +116,7 @@ const originalConsoleLog = console.log;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockedAuthService.getToken.mockReturnValue(mockToken);
   });
 
   it("should successfully fetch products", async () => {
@@ -132,8 +136,9 @@ const originalConsoleLog = console.log;
 
     mockedAxios.get.mockResolvedValue(mockAxiosResponse);
 
-    const result = await apiGetAll(mockToken);
+    const result = await apiGetAll();
 
+    expect(mockedAuthService.getToken).toHaveBeenCalled();
     expect(mockedAxios.get).toHaveBeenCalledWith(`${baseURL}/warehouse`, {
       headers: {
         ...defaultHeaders,
@@ -144,6 +149,29 @@ const originalConsoleLog = console.log;
     expect(result).toEqual(mockProducts);
   });
 
+  it("should return empty array when no token is available", async () => {
+    mockedAuthService.getToken.mockReturnValue(null);
+
+    const mockAxiosResponse = {
+      status: 200,
+      data: [],
+    };
+
+    mockedAxios.get.mockResolvedValue(mockAxiosResponse);
+
+    const result = await apiGetAll();
+
+    expect(mockedAuthService.getToken).toHaveBeenCalled();
+    expect(mockedAxios.get).toHaveBeenCalledWith(`${baseURL}/warehouse`, {
+      headers: {
+        ...defaultHeaders,
+        Authorization: "Bearer null",
+      },
+      withCredentials: true,
+    });
+    expect(result).toEqual([]);
+  });
+
   it("should return empty array on unsuccessful fetch", async () => {
     const mockAxiosResponse = {
       status: 404,
@@ -152,7 +180,7 @@ const originalConsoleLog = console.log;
 
     mockedAxios.get.mockResolvedValue(mockAxiosResponse);
 
-    const result = await apiGetAll(mockToken);
+    const result = await apiGetAll();
 
     expect(result).toEqual([]);
   });
@@ -161,6 +189,10 @@ const originalConsoleLog = console.log;
     const error = new Error("Network error");
     mockedAxios.get.mockRejectedValue(error);
 
-    await expect(apiGetAll(mockToken)).rejects.toThrow("Network error");
+    await expect(apiGetAll()).rejects.toThrow("Network error");
+  });
+
+  afterEach(() => {
+    mockedAxios.get.mockClear();
   });
 });

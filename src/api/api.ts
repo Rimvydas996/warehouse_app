@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import LoginResponseInterface from "../model/LoginResponseInterface";
 import ProductInterface from "../model/ProductInterface";
+import { getToken } from "../services/auth-service";
 
 const API_BASE_URL = "https://warehouse-liart.vercel.app";
 
@@ -38,7 +39,8 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
   return false;
 }
 
-async function apiGetAll(token: string | null): Promise<ProductInterface[]> {
+async function apiGetAll(): Promise<ProductInterface[]> {
+  const token = getToken();
   let productData: ProductInterface[] = [];
   try {
     const request = await axios.get(`${API_BASE_URL}/warehouse`, {
@@ -66,7 +68,5 @@ async function apiGetAll(token: string | null): Promise<ProductInterface[]> {
 
   return productData;
 }
-
-// async function ajustQuantity(token: string | null, productId: string, quantity: number) {
 
 export { apiLogin, apiGetAll };

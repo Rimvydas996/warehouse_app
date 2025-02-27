@@ -1,73 +1,75 @@
 /// <reference types="jest" />
 import { apiLogin, apiGetAll } from "../src/api/api";
-import * as authService from "../src/services/auth-service";
 import axios from "axios";
 import LoginResponseInterface from "../src/model/LoginResponseInterface";
 import ProductInterface from "../src/model/ProductInterface";
-import UserInterface from "../src/model/UserInterface";
 
+// Mock axios
 jest.mock("axios");
-jest.mock("../src/services/auth-service");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-const mockedAuthService = authService as jest.Mocked<typeof authService>;
 
+// Mock localStorage
+const mockLocalStorage = (() => {
+  let store: { [key: string]: string } = {};
+  return {
+    getItem: jest.fn((key: string) => store[key]),
+    setItem: jest.fn((key: string, value: string) => {
+      store[key] = value;
+    }),
+    clear: jest.fn(() => {
+      store = {};
+    }),
+  };
+})();
+Object.defineProperty(window, "localStorage", { value: mockLocalStorage });
+
+const API_BASE_URL = "https://warehouse-liart.vercel.app";
 const mockToken = "mock-token";
-const baseURL = "https://warehouse-liart.vercel.app";
-
-const defaultHeaders = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-};
-
-const mockUser: UserInterface = {
-  _id: "1",
-  email: "test@test.com",
-  role: "admin",
-  premission: [],
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
 
 describe("apiLogin", () => {
-  const originalConsoleLog = console.log;
-  const originalConsoleError = console.error;
-
-  beforeAll(() => {
-    console.log = jest.fn();
-    console.error = jest.fn();
-  });
-
-  afterAll(() => {
-    console.log = originalConsoleLog;
-    console.error = originalConsoleError;
-  });
-
   beforeEach(() => {
     jest.clearAllMocks();
+    console.log = jest.fn();
+    console.error = jest.fn();
   });
 
   it("should successfully login user", async () => {
     const mockLoginResponse: LoginResponseInterface = {
       token: mockToken,
-      user: mockUser,
+      user: {
+        _id: "1",
+        email: "test@test.com",
+        role: "admin",
+        premission: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     };
-    const mockAxiosResponse = {
+
+    mockedAxios.post.mockResolvedValueOnce({
       status: 200,
       data: mockLoginResponse,
-    };
-    const loginData = {
+    });
+
+    const result = await apiLogin({
       email: "test@test.com",
       password: "password123",
-    };
-
-    mockedAxios.post.mockResolvedValue(mockAxiosResponse);
-
-    const result = await apiLogin(loginData);
-
-    expect(mockedAxios.post).toHaveBeenCalledWith(`${baseURL}/auth/login`, loginData, {
-      headers: defaultHeaders,
-      withCredentials: true,
     });
+
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      `${API_BASE_URL}/auth/login`,
+      {
+        email: "test@test.com",
+        password: "password123",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        withCredentials: true,
+      }
+    );
     expect(result).toEqual(mockLoginResponse);
   });
 
@@ -101,22 +103,9 @@ describe("apiLogin", () => {
 });
 
 describe("apiGetAll", () => {
-  const originalConsoleLog = console.log;
-  const originalConsoleError = console.error;
-
-  beforeAll(() => {
-    console.log = jest.fn();
-    console.error = jest.fn();
-  });
-
-  afterAll(() => {
-    console.log = originalConsoleLog;
-    console.error = originalConsoleError;
-  });
-
   beforeEach(() => {
     jest.clearAllMocks();
-    mockedAuthService.getToken.mockReturnValue(mockToken);
+    localStorage.clear();
   });
 
   it("should successfully fetch products", async () => {
@@ -129,20 +118,21 @@ describe("apiGetAll", () => {
         storageLocation: "A1",
       },
     ];
-    const mockAxiosResponse = {
+
+    localStorage.setItem("token", mockToken);
+    mockedAxios.get.mockResolvedValueOnce({
       status: 200,
       data: mockProducts,
-    };
-
-    mockedAxios.get.mockResolvedValue(mockAxiosResponse);
+    });
 
     const result = await apiGetAll();
 
-    expect(mockedAuthService.getToken).toHaveBeenCalled();
-    expect(mockedAxios.get).toHaveBeenCalledWith(`${baseURL}/warehouse`, {
+    expect(localStorage.getItem).toHaveBeenCalledWith("token");
+    expect(mockedAxios.get).toHaveBeenCalledWith(`${API_BASE_URL}/warehouse`, {
       headers: {
-        ...defaultHeaders,
         Authorization: `Bearer ${mockToken}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
       withCredentials: true,
     });
@@ -150,22 +140,20 @@ describe("apiGetAll", () => {
   });
 
   it("should return empty array when no token is available", async () => {
-    mockedAuthService.getToken.mockReturnValue(null);
-
-    const mockAxiosResponse = {
+    localStorage.setItem("token", "");
+    mockedAxios.get.mockResolvedValueOnce({
       status: 200,
       data: [],
-    };
-
-    mockedAxios.get.mockResolvedValue(mockAxiosResponse);
+    });
 
     const result = await apiGetAll();
 
-    expect(mockedAuthService.getToken).toHaveBeenCalled();
-    expect(mockedAxios.get).toHaveBeenCalledWith(`${baseURL}/warehouse`, {
+    expect(localStorage.getItem).toHaveBeenCalledWith("token");
+    expect(mockedAxios.get).toHaveBeenCalledWith(`${API_BASE_URL}/warehouse`, {
       headers: {
-        ...defaultHeaders,
-        Authorization: "Bearer null",
+        Authorization: "Bearer ",
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
       withCredentials: true,
     });
@@ -186,8 +174,9 @@ describe("apiGetAll", () => {
   });
 
   it("should handle network error", async () => {
+    localStorage.setItem("token", mockToken);
     const error = new Error("Network error");
-    mockedAxios.get.mockRejectedValue(error);
+    mockedAxios.get.mockRejectedValueOnce(error);
 
     await expect(apiGetAll()).rejects.toThrow("Network error");
   });

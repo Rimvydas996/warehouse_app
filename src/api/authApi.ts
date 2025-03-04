@@ -1,6 +1,5 @@
 import axios, { AxiosError } from "axios";
 import LoginResponseInterface from "../model/LoginResponseInterface";
-import ProductInterface from "../model/ProductInterface";
 
 const API_BASE_URL = "https://warehouse-liart.vercel.app";
 
@@ -16,7 +15,7 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      withCredentials: true, // This is important for CORS
+      withCredentials: true,
     });
 
     console.log("Response status:", response.status);
@@ -37,28 +36,21 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
   }
   return false;
 }
-
-async function apiGetAll(): Promise<ProductInterface[]> {
-  const token = localStorage.getItem("token");
-  console.log("Token:", token);
-
-  let productData: ProductInterface[] = [];
+async function apiRegister(submittedData: LoginData) {
   try {
-    const request = await axios.get(`${API_BASE_URL}/warehouse`, {
+    const response = await axios.post(`${API_BASE_URL}/auth/register`, submittedData, {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
         Accept: "application/json",
       },
       withCredentials: true,
     });
-
-    if (request.status >= 200 && request.status < 300) {
-      productData = request.data;
+    if (response.status >= 200 && response.status < 300) {
+      return true;
     }
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.error("Get all error:", {
+      console.error("Register error details:", {
         message: error.message,
         status: error.response?.status,
         data: error.response?.data,
@@ -66,8 +58,7 @@ async function apiGetAll(): Promise<ProductInterface[]> {
     }
     throw error;
   }
-
-  return productData;
+  return false;
 }
 
-export { apiLogin, apiGetAll };
+export { apiLogin, apiRegister };

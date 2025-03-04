@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { apiLogin } from "../api/api";
+import { apiLogin } from "../api/authApi";
 import LoginResponseInterface from "../model/LoginResponseInterface";
 import UserInterface from "../model/UserInterface";
 import CredentialsInterface from "../model/CredentialsInterface";

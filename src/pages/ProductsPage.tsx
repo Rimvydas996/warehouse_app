@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { apiGetAll } from "../api/api";
+import { apiGetAll } from "../api/warehoseApi";
 import ProductInterface from "../model/ProductInterface";
 import { ExpandLess, MoreVert } from "@mui/icons-material";
 

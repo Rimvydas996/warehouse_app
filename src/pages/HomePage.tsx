@@ -1,3 +1,5 @@
+import warehouseImage from "../assets/warehouse.webp";
+
 export default function HomePage() {
   return (
     <div className="min-h-screen py-8 px-4">
@@ -9,13 +11,15 @@ export default function HomePage() {
           pl-4 mb-12
           bg-gradient-to-r from-amber-200 to-transparent
           py-3 rounded-r-lg
-          animate-pulse
-        "
+          "
         >
           Welcome to Warehouse
         </h1>
 
         <div className="grid gap-8 md:grid-cols-2">
+          <div className="bg-white p-6 rounded-xl shadow-lg">
+            <img src={warehouseImage} alt="Warehouse" className="w-full h-auto rounded-xl" />
+          </div>
           <div
             className="
             bg-white p-6 rounded-xl

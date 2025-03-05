@@ -1,0 +1,16 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width="64" height="64"
+  fill="currentColor"
+>
+  <!-- Modernizuotas sandėlio stogas -->
+  <path d="M3 9L12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" stroke="black" stroke-width="2" fill="#90CAF9" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Sandėlio durys su modernesniu dizainu -->
+  <rect x="8" y="14" width="8" height="6" stroke="black" stroke-width="2" fill="#1976D2" rx="1"/>
+  
+  <!-- Minimalistinės lentynos su dėžėmis -->
+  <rect x="4.5" y="12" width="3" height="3" fill="#FFC107" rx="0.5"/>
+  <rect x="16.5" y="12" width="3" height="3" fill="#FFC107" rx="0.5"/>
+</svg>

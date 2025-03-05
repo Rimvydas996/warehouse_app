@@ -12,7 +12,7 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 
 function App() {
   return (
-    <div className="bg-amber-50">
+    <div className="rounded-2xl  ">
       <AuthProvider>
         <ThemeProvider>
           <Suspense fallback={<div className="text-lg">Kraunama...</div>}>

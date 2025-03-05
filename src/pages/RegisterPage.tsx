@@ -26,7 +26,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-amber-100 p-4">
+    <div className="min-h-screen flex items-center justify-center  p-4">
       <div className="w-full max-w-md">
         <h2 className="text-3xl font-bold text-amber-900 text-center mb-8">
           Register to Warehouse

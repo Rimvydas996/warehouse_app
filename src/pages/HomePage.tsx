@@ -1,6 +1,6 @@
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-amber-100 py-8 px-4">
+    <div className="min-h-screen py-8 px-4">
       <div className="max-w-5xl mx-auto">
         <h1
           className="

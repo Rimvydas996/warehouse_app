@@ -1,35 +1,29 @@
-/// <reference types="jest" />
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { apiLogin } from "../src/api/authApi";
 import axios from "axios";
 import LoginResponseInterface from "../src/model/LoginResponseInterface";
 
 // Mock axios
-jest.mock("axios");
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+vi.mock("axios");
 
-// Mock localStorage
-const mockLocalStorage = (() => {
-  let store: { [key: string]: string } = {};
-  return {
-    getItem: jest.fn((key: string) => store[key]),
-    setItem: jest.fn((key: string, value: string) => {
-      store[key] = value;
-    }),
-    clear: jest.fn(() => {
-      store = {};
-    }),
-  };
-})();
-Object.defineProperty(window, "localStorage", { value: mockLocalStorage });
+// Mock localStorage before any test runs
+const mockLocalStorage = {
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  clear: vi.fn(),
+};
+
+// Setup localStorage mock
+vi.stubGlobal("localStorage", mockLocalStorage);
 
 const API_BASE_URL = "https://warehouse-liart.vercel.app";
 const mockToken = "mock-token";
 
 describe("apiLogin", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    console.log = jest.fn();
-    console.error = jest.fn();
+    vi.clearAllMocks();
+    console.log = vi.fn();
+    console.error = vi.fn();
   });
 
   it("should successfully login user", async () => {
@@ -45,7 +39,7 @@ describe("apiLogin", () => {
       },
     };
 
-    mockedAxios.post.mockResolvedValueOnce({
+    vi.mocked(axios.post).mockResolvedValueOnce({
       status: 200,
       data: mockLoginResponse,
     });
@@ -55,7 +49,7 @@ describe("apiLogin", () => {
       password: "password123",
     });
 
-    expect(mockedAxios.post).toHaveBeenCalledWith(
+    expect(axios.post).toHaveBeenCalledWith(
       `${API_BASE_URL}/auth/login`,
       {
         email: "test@test.com",
@@ -78,7 +72,7 @@ describe("apiLogin", () => {
       data: { message: "Invalid credentials" },
     };
 
-    mockedAxios.post.mockResolvedValue(mockAxiosResponse);
+    vi.mocked(axios.post).mockResolvedValue(mockAxiosResponse);
 
     const result = await apiLogin({
       email: "test@test.com",
@@ -90,13 +84,13 @@ describe("apiLogin", () => {
 
   it("should handle login error", async () => {
     const error = new Error("Network error");
-    mockedAxios.post.mockRejectedValue(error);
+    vi.mocked(axios.post).mockRejectedValue(error);
 
     await expect(
       apiLogin({
         email: "test@test.com",
         password: "password123",
       })
-    ).rejects.toThrow("Network error");
+    ).rejects.toThrowError("Network error");
   });
 });

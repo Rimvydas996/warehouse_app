@@ -6,7 +6,7 @@ import { ExpandLess, MoreVert } from "@mui/icons-material";
 export default function ProductsPage() {
   const [input, setInput] = useState<string>("");
   const [products, setProducts] = useState<ProductInterface[]>([]);
-  const [more, setMore] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<number | null>(null);
 
   useEffect(() => {
     apiGetAll().then((data) => {
@@ -14,8 +14,8 @@ export default function ProductsPage() {
     });
   }, []);
 
-  const HandleMore = () => {
-    setMore(!more);
+  const HandleMore = (key: number) => {
+    setExpanded(expanded === key ? null : key);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +23,6 @@ export default function ProductsPage() {
   };
 
   const handleInput = () => {
-    console.log("Input value:", input);
     setInput("");
   };
 
@@ -51,12 +50,14 @@ export default function ProductsPage() {
                 grid grid-cols-4 gap-4 items-center
               "
             >
-              <span className="text-lg font-medium col-span-2 text-amber-900">{product.title}</span>
+              <span className="text-lg text-left font-medium col-span-2 text-amber-900">
+                {product.title}
+              </span>
               <span className="text-lg text-amber-800">Stock: {product.quantity}</span>
               <div className="flex justify-end gap-2">
-                {!more ? (
+                {expanded !== key ? (
                   <button
-                    onClick={HandleMore}
+                    onClick={() => HandleMore(key)}
                     className="
                       bg-amber-200 p-2
                       rounded-lg border border-amber-300
@@ -91,7 +92,7 @@ export default function ProductsPage() {
                       adjust
                     </button>
                     <button
-                      onClick={HandleMore}
+                      onClick={() => HandleMore(key)}
                       className="
                         bg-amber-200 p-1
                         border-2 border-amber-900 rounded-lg

@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
 import LoginResponseInterface from "../model/LoginResponseInterface";
-
-const API_BASE_URL = "https://warehouse-liart.vercel.app";
+import { API_BASE_URL } from "../config/api.config";
 
 interface LoginData {
   email: string;
@@ -17,9 +16,6 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
       },
       withCredentials: true,
     });
-
-    console.log("Response status:", response.status);
-    console.log("Response data:", response.data);
 
     if (response.status >= 200 && response.status < 300) {
       return response.data;

@@ -4,7 +4,6 @@ const API_BASE_URL = "https://warehouse-liart.vercel.app";
 
 async function apiGetAll(): Promise<ProductInterface[]> {
   const token = localStorage.getItem("token");
-  console.log("Token:", token);
 
   let productData: ProductInterface[] = [];
   try {

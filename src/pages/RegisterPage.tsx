@@ -11,9 +11,7 @@ const RegisterPage = () => {
 
   const registerHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setInputs({ email: "", password: "" });
     try {
-      e.preventDefault();
       const registerStatus: boolean = await apiRegister(inputs);
       if (!registerStatus) {
         setError("try different email or password");

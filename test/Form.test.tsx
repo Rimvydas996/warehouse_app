@@ -1,9 +1,10 @@
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Form from "./Form";
-import "@testing-library/jest-dom";
+import Form from "../src/components/Form";
+import "@testing-library/jest-dom/vitest";
 
 describe("Form Component", () => {
-  const mockSubmit = jest.fn((e) => e.preventDefault());
+  const mockSubmit = vi.fn((e) => e.preventDefault());
 
   const defaultProps = {
     children: (
@@ -37,7 +38,7 @@ describe("Form Component", () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe("Rendering", () => {

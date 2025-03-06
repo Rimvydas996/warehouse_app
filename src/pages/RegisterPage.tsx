@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { apiRegister } from "../api/authApi";
 import Input from "../components/Input";
+import SubmitButton from "../components/SubmitButton";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -52,22 +53,7 @@ const RegisterPage = () => {
               onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
               label="Password"
             />
-
-            <button
-              type="submit"
-              className="
-                w-full py-2 px-4
-                bg-gradient-to-r from-amber-400 to-amber-500
-                hover:from-amber-500 hover:to-amber-600
-                text-white font-semibold
-                rounded-lg shadow-md
-                hover:shadow-lg
-                transition duration-200
-                focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2
-              "
-            >
-              Register
-            </button>
+            <SubmitButton buttonText="Register" />
           </Form>
 
           {error && (

@@ -4,6 +4,7 @@ import Input from "../components/Input";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import SubmitButton from "../components/SubmitButton";
 
 const LoginPage = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
@@ -53,21 +54,7 @@ const LoginPage = (): JSX.Element => {
               onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
               label="Password"
             />
-            <button
-              type="submit"
-              className="
-                w-full py-2 px-4
-                bg-gradient-to-r from-amber-400 to-amber-500
-                hover:from-amber-500 hover:to-amber-600
-                text-white font-semibold
-                rounded-lg shadow-md
-                hover:shadow-lg
-                transition duration-200
-                focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2
-              "
-            >
-              Login
-            </button>
+            <SubmitButton buttonText="Login" />
           </Form>
 
           {error && (

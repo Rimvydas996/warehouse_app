@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Form from "../components/Form";
+import Input from "../components/Input";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
@@ -36,50 +37,22 @@ const LoginPage = (): JSX.Element => {
 
         <div className="bg-white p-8 rounded-xl shadow-lg border border-amber-200 w-full">
           <Form onSubmit={loginHandler}>
-            <div className="space-y-2 w-full">
-              <label htmlFor="email" className="block text-sm font-medium text-amber-900">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={inputs.email}
-                onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
-                className="
-                  w-full px-4 py-3 rounded-lg
-                  border-2 border-amber-300 
-                  focus:outline-none focus:ring-2 focus:ring-amber-400
-                  focus:border-transparent
-                  placeholder:text-amber-300
-                  transition duration-200
-                  text-amber-900
-                "
-              />
-            </div>
-
-            <div className="space-y-2 w-full">
-              <label htmlFor="password" className="block text-sm font-medium text-amber-900">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                value={inputs.password}
-                onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
-                className="
-                  w-full px-4 py-3 rounded-lg
-                  border-2 border-amber-300
-                  focus:outline-none focus:ring-2 focus:ring-amber-400
-                  focus:border-transparent
-                  placeholder:text-amber-300
-                  transition duration-200
-                  text-amber-900
-                "
-              />
-            </div>
-
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={inputs.email}
+              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+              label="Email"
+            />
+            <Input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              value={inputs.password}
+              onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+              label="Password"
+            />
             <button
               type="submit"
               className="

@@ -1,13 +1,4 @@
-import React from "react";
-
-interface InputProps {
-  id: string;
-  type: string;
-  placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string;
-}
+import InputProps from "../model/InputInterface";
 
 const Input = ({ id, type, placeholder, value, onChange, label }: InputProps): JSX.Element => {
   return (

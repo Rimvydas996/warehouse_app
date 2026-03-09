@@ -20,8 +20,7 @@ const RegisterPage = () => {
       } else navigate("/login");
       setInputs({ email: "", password: "" });
     } catch (error) {
-      const errorMassage =
-        error instanceof AxiosError ? error.response?.data.message : "Unknown error";
+      const errorMassage = error instanceof AxiosError ? error.response?.data.message : "Unknown error";
 
       setError(errorMassage);
     }
@@ -30,9 +29,7 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center  p-4">
       <div className="w-full max-w-md">
-        <h2 className="text-3xl font-bold text-amber-900 text-center mb-8">
-          Register to Warehouse
-        </h2>
+        <h2 className="text-3xl font-bold text-amber-900 text-center mb-8">Register to Warehouse</h2>
 
         <div className="bg-white p-8 rounded-xl shadow-lg border border-amber-200 w-full">
           <Form onSubmit={registerHandler}>

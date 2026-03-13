@@ -1,13 +1,9 @@
 import axios, { AxiosError } from "axios";
-import LoginResponseInterface from "../model/LoginResponseInterface";
-import { API_BASE_URL } from "../config/api.config";
+import ILoginResponse from "../../types/api/ILoginResponse";
+import ICredentials from "../../types/api/ICredentials";
+import { API_BASE_URL } from "../../config/api.config";
 
-interface LoginData {
-    email: string;
-    password: string;
-}
-
-async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterface | false> {
+async function apiLogin(submittedData: ICredentials): Promise<ILoginResponse | false> {
     try {
         const response = await axios.post(`${API_BASE_URL}/auth/login`, submittedData, {
             headers: {
@@ -32,7 +28,7 @@ async function apiLogin(submittedData: LoginData): Promise<LoginResponseInterfac
     }
     return false;
 }
-async function apiRegister(submittedData: LoginData) {
+async function apiRegister(submittedData: ICredentials) {
     try {
         const response = await axios.post(`${API_BASE_URL}/auth/register`, submittedData, {
             headers: {

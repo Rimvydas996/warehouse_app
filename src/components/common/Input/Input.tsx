@@ -1,6 +1,6 @@
-import InputProps from "../model/InputInterface";
+import type IInputProps from "../../../types/models/IInput";
 
-const Input = ({ id, type, placeholder, value, onChange, label }: InputProps): JSX.Element => {
+const Input = ({ id, type, placeholder, value, onChange, label }: IInputProps): JSX.Element => {
   return (
     <div className="space-y-2 w-full">
       <label htmlFor={id} className="block text-sm font-medium text-amber-900">

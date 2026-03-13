@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Menu from "./Menu";
+import Menu from "../Menu/Menu";
 
 export default function NavigationBar(): JSX.Element {
   const navigate = useNavigate();

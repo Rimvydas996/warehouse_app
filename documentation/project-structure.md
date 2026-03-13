@@ -3,7 +3,7 @@
 ## Root Directory Structure
 
 ```
-warehouse/
+warehouse_app/
 ├── documentation/         # Project documentation files
 ├── node_modules/         # Project dependencies
 ├── public/              # Static assets and public files
@@ -14,75 +14,62 @@ warehouse/
 
 ```
 src/
-├── assets/              # Images, fonts, and other static resources
-│   ├── images/
-│   └── styles/
-│
-├── components/          # Reusable React components
-│   ├── common/         # Shared components used across features
-│   │   ├── Button/
+├── assets/              # Images and static assets
+│   └── warehouse.webp
+├── components/          # React components
+│   ├── common/          # Shared UI components
+│   │   ├── Form/
 │   │   ├── Input/
-│   │   └── Modal/
-│   │
-│   ├── layout/         # Layout components
-│   │   ├── Header/
-│   │   ├── Sidebar/
-│   │   └── Footer/
-│   │
-│   └── features/       # Feature-specific components
-│       ├── products/
-│       ├── inventory/
-│       └── users/
-│
-├── config/             # Configuration files
-│   ├── api.config.ts
-│   └── routes.config.ts
-│
-├── contexts/           # React Context providers
-│   ├── AuthContext/
-│   └── ThemeContext/
-│
-├── hooks/              # Custom React hooks
-│   ├── useAuth.ts
-│   ├── useForm.ts
-│   └── useApi.ts
-│
-├── pages/              # Page components
-│   ├── Dashboard/
-│   ├── Products/
-│   ├── Inventory/
-│   └── Users/
-│
-├── services/           # API and other services
-│   ├── api/
-│   │   ├── products.ts
-│   │   ├── inventory.ts
-│   │   └── users.ts
-│   └── utils/
-│
-├── store/             # State management
-│   ├── actions/
-│   ├── reducers/
-│   └── types/
-│
-├── types/             # TypeScript type definitions
-│   ├── models/
+│   │   ├── LiProduct/
+│   │   └── SubmitButton/
+│   ├── layout/          # Layout components
+│   │   ├── Menu/
+│   │   └── NavigationBar/
+│   └── features/        # Feature-specific components
+│       └── products/
+│           └── AddProductForm/
+├── config/              # Configuration files
+│   └── api.config.ts
+├── context/             # React Context providers
+│   ├── AuthContext.tsx
+│   └── ThemeContext.tsx
+├── pages/               # Page components
+│   ├── HomePage.tsx
+│   ├── LoginPage.tsx
+│   ├── ProductsPage.tsx
+│   └── RegisterPage.tsx
+├── routes/              # Route guards and route helpers
+│   └── PrivateRoute.tsx
+├── services/            # API services
 │   └── api/
-│
-├── utils/             # Utility functions and helpers
-│   ├── formatting.ts
-│   ├── validation.ts
-│   └── helpers.ts
-│
-├── App.tsx            # Root React component
-├── main.tsx          # Application entry point
-└── vite-env.d.ts     # Vite type declarations
+│       ├── authApi.ts
+│       └── warehouseApi.ts
+├── styles/              # Global styles and tokens
+│   ├── _tokens.scss
+│   └── global.scss
+├── types/               # TypeScript type definitions
+│   ├── api/
+│   │   ├── ICredentials.ts
+│   │   └── ILoginResponse.ts
+│   └── models/
+│       ├── IAuthContext.ts
+│       ├── IInput.ts
+│       ├── IProduct.ts
+│       └── IUser.ts
+├── utils/               # Utility functions and helpers
+│   └── productValidators/
+│       ├── productValidators.ts
+│       └── productValidators.test.ts
+├── App.tsx              # Root React component
+├── App.css              # App-level styles
+├── index.css            # Global CSS
+└── main.tsx             # Application entry point
 ```
 
 ## Configuration Files (Root Level)
 
 ```
-warehouse/
+warehouse_app/
 ├── .eslintrc.json    # ESLint configuration
 ├── .gitignore        # Git ignore rules
 ├── .prettierrc       # Prettier configuration
@@ -118,24 +105,22 @@ documentation/
 
 ### Components
 
-- `common/`: Reusable UI components
-- `layout/`: Page structure components
-- `features/`: Feature-specific components
+- `components/common/`: Reusable UI components
+- `components/layout/`: Navigation and layout components
+- `components/features/`: Feature-specific components
 
 ### Services
 
-- `api/`: API integration services
-- `utils/`: Helper functions and utilities
+- `services/api/`: API integration services
 
 ### State Management
 
-- `contexts/`: React Context definitions
-- `store/`: State management setup (if using Redux/other)
+- `context/`: React Context definitions
 
 ### Types
 
-- `models/`: Data model type definitions
-- `api/`: API-related type definitions
+- `types/models/`: Data model type definitions
+- `types/api/`: API-related type definitions
 
 ## Notes
 

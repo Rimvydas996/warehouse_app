@@ -1,12 +1,12 @@
-export interface Permission {
+export interface IPermission {
   type: string;
 }
 
-export default interface UserInterface {
+export default interface IUser {
   _id: string;
   email: string;
   role: string;
-  premission: Permission[];
+  premission: IPermission[];
   createdAt: Date;
   updatedAt: Date;
 }

@@ -1,4 +1,6 @@
-export default interface InputProps {
+import type React from "react";
+
+export default interface IInputProps {
   id: string;
   type: string;
   placeholder: string;

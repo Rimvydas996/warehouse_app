@@ -1,4 +1,4 @@
-export default interface ProductInterface {
+export default interface IProduct {
   title: string;
   quantity: number;
   supplyStatus: boolean;

@@ -1,6 +1,8 @@
+import type { FormEvent, ReactNode } from "react";
+
 interface FormProps {
-  children: React.ReactNode;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  children: ReactNode;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   buttonText?: string;
   setError?: (message: string) => void;
 }

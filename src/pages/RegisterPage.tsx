@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Form from "../components/FormComponent/Form";
+import Form from "../components/common/Form/Form";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { apiRegister } from "../api/authApi";
-import Input from "../components/Input";
-import SubmitButton from "../components/SubmitButton";
+import { apiRegister } from "../services/api/authApi";
+import Input from "../components/common/Input/Input";
+import SubmitButton from "../components/common/SubmitButton/SubmitButton";
 
 const RegisterPage = () => {
     const navigate = useNavigate();

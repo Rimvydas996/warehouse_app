@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Form from "../components/FormComponent/Form";
-import Input from "../components/Input";
+import Form from "../components/common/Form/Form";
+import Input from "../components/common/Input/Input";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
-import SubmitButton from "../components/SubmitButton";
+import SubmitButton from "../components/common/SubmitButton/SubmitButton";
 
 const LoginPage = (): JSX.Element => {
     const [error, setError] = useState<string | null>(null);

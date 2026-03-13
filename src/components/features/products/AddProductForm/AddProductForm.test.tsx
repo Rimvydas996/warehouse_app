@@ -1,7 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import AddProductForm from "./AddProductForm";
+import { apiCreateProduct } from "../../../../services/api/warehouseApi";
+
+vi.mock("../../../../services/api/warehouseApi", () => ({
+  apiCreateProduct: vi.fn(),
+}));
 
 describe("AddProductForm", () => {
   beforeEach(() => {
@@ -9,7 +14,7 @@ describe("AddProductForm", () => {
   });
 
   it("renders the toggle button and expands the form", () => {
-    render(<AddProductForm />);
+    render(<AddProductForm onProductCreated={vi.fn()} />);
 
     const toggle = screen.getByRole("button", { name: /add product/i });
     expect(toggle).toHaveAttribute("aria-expanded", "false");
@@ -24,7 +29,7 @@ describe("AddProductForm", () => {
   });
 
   it("shows validation messages on submit when required fields are missing", () => {
-    render(<AddProductForm />);
+    render(<AddProductForm onProductCreated={vi.fn()} />);
 
     fireEvent.click(screen.getByRole("button", { name: /add product/i }));
     const submitButton = screen.getByRole("button", { name: /save product/i });
@@ -36,9 +41,17 @@ describe("AddProductForm", () => {
     expect(screen.getByText("Storage location must be selected")).toBeInTheDocument();
   });
 
-  it("submits valid values and clears errors", () => {
-    const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => undefined);
-    render(<AddProductForm />);
+  it("submits valid values and clears errors", async () => {
+    const onProductCreated = vi.fn();
+    vi.mocked(apiCreateProduct).mockResolvedValueOnce({
+      _id: "1",
+      title: "Milk",
+      quantity: 3,
+      supplyStatus: true,
+      storageLocation: "warehouse-a",
+    });
+
+    render(<AddProductForm onProductCreated={onProductCreated} />);
 
     fireEvent.click(screen.getByRole("button", { name: /add product/i }));
 
@@ -56,7 +69,10 @@ describe("AddProductForm", () => {
     const submitButton = screen.getByRole("button", { name: /save product/i });
     fireEvent.submit(submitButton.closest("form") as HTMLFormElement);
 
-    expect(alertSpy).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(apiCreateProduct).toHaveBeenCalled();
+      expect(onProductCreated).toHaveBeenCalled();
+    });
     expect(screen.queryByText("Title is required")).not.toBeInTheDocument();
   });
 });

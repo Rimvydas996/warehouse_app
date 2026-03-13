@@ -1,22 +1,26 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { apiLogin } from "../api/authApi";
-import LoginResponseInterface from "../model/LoginResponseInterface";
-import UserInterface from "../model/UserInterface";
-import CredentialsInterface from "../model/CredentialsInterface";
-import AuthContextInterface from "../model/AuthContextInterface";
+import { apiLogin } from "../services/api/authApi";
+import ILoginResponse from "../types/api/ILoginResponse";
+import IUser from "../types/models/IUser";
+import ICredentials from "../types/api/ICredentials";
+import IAuthContext from "../types/models/IAuthContext";
 import { useNavigate } from "react-router-dom";
 
-export const AuthContext = createContext<AuthContextInterface>({
+export const AuthContext = createContext<IAuthContext & { isReady: boolean }>({
   isAuthenticated: false,
   user: null,
   login: async () => false,
   logout: () => {},
   getToken: () => null,
   getUserData: () => null,
+  isReady: false,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
+  const [isReady, setIsReady] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
     const token = getToken();
@@ -28,24 +32,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(user);
       }
     }
+    setIsReady(true);
     return () => {
       setIsAuthenticated(false);
       setUser(null);
     };
   }, []);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<UserInterface | null>(null);
   const getToken = (): string | null => localStorage.getItem("token");
 
-  const getUserData = (): UserInterface | null => {
+  const getUserData = (): IUser | null => {
     const user = localStorage.getItem("user");
     if (!user) {
       return null;
     }
     return JSON.parse(user);
   };
-  const login = async (inputs: CredentialsInterface): Promise<boolean> => {
-    const user: LoginResponseInterface | false = await apiLogin(inputs);
+  const login = async (inputs: ICredentials): Promise<boolean> => {
+    const user: ILoginResponse | false = await apiLogin(inputs);
 
     if (user) {
       localStorage.setItem("token", user.token);
@@ -68,7 +71,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, login: login, logout, getToken, getUserData }}
+      value={{ isAuthenticated, user, login: login, logout, getToken, getUserData, isReady }}
     >
       {children}
     </AuthContext.Provider>

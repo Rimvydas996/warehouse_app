@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
-import LiProduct from "./LiProduct";
+import { useTheme } from "../../../context/ThemeContext";
+import LiProduct from "../../common/LiProduct/LiProduct";
 
 export default function Menu() {
   const [open, setOpen] = useState(false);

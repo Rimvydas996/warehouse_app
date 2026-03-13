@@ -7,13 +7,16 @@ This is a warehouse management system built using React and TypeScript. The syst
 ## Project Structure
 
 ```
-warehouse/
+warehouse_app/
 ├── src/
 │   ├── components/      # React components
-│   ├── pages/          # Page components
-│   ├── services/       # API services
-│   ├── types/          # TypeScript interfaces
-│   └── utils/          # Utility functions
+│   ├── context/         # React Context providers
+│   ├── pages/           # Page components
+│   ├── routes/          # Route guards
+│   ├── services/        # API services
+│   ├── styles/          # Global styles
+│   ├── types/           # TypeScript interfaces
+│   └── utils/           # Utility functions
 ├── public/             # Static files
 └── documentation/      # Project documentation
 ```
@@ -50,8 +53,15 @@ npm run build
 
 The project uses the following environment variables:
 
-- `VITE_API_URL`: Base URL for the API
-- `VITE_AUTH_TOKEN`: Authentication token (if required)
+- `VITE_API_URL`: Base URL for the API (preferred)
+- `VITE_API_BASE_URL`: Base URL for the API (fallback)
+
+## Routes
+
+- `/` - Home page
+- `/login` - Login page
+- `/register` - Register page
+- `/products` - Products page (protected)
 
 ## Component Documentation
 
@@ -59,7 +69,10 @@ Detailed documentation for main components and their usage will be added here.
 
 ## API Integration
 
-API endpoints and integration details will be documented in this section.
+Current API modules live in `src/services/api/`:
+
+- `authApi.ts` for auth endpoints (`/auth/login`, `/auth/register`)
+- `warehouseApi.ts` for warehouse endpoints (`/warehouse`)
 
 ## Deployment
 

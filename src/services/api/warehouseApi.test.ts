@@ -1,9 +1,12 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import axios from "axios";
-import { apiGetAll } from "./warehoseApi";
-import ProductInterface from "../model/ProductInterface";
+import { apiGetAll } from "./warehouseApi";
+import IProduct from "../../types/models/IProduct";
 
 vi.mock("axios");
+vi.mock("../../config/api.config", () => ({
+  API_BASE_URL: "https://warehouse-liart.vercel.app",
+}));
 
 const mockStorage: { [key: string]: string } = {};
 const mockLocalStorage = {
@@ -28,7 +31,7 @@ describe("apiGetAll", () => {
   });
 
   it("should successfully fetch products", async () => {
-    const mockProducts: ProductInterface[] = [
+    const mockProducts: IProduct[] = [
       {
         _id: "1",
         title: "Test Product",

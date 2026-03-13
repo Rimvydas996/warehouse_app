@@ -1,11 +1,11 @@
 import "./App.css";
 import { Suspense, lazy } from "react"; // Remove useEffect import
 import { Route, Routes } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar";
+import NavigationBar from "./components/layout/NavigationBar/NavigationBar";
 import { ThemeProvider } from "./context/ThemeContext";
 import PrivateRoute from "./routes/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
-import PrductsPage from "./pages/ProductsPage";
+import ProductsPage from "./pages/ProductsPage";
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -24,9 +24,9 @@ function App() {
               <Route
                 path="/products"
                 element={
-                  <PrivateRoute>
-                    <PrductsPage />
-                  </PrivateRoute>
+                    <PrivateRoute>
+                    <ProductsPage />
+                    </PrivateRoute>
                 }
               />
             </Routes>

@@ -1,36 +1,49 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Add, ExpandLess } from "@mui/icons-material";
-import type { IProductFormErrors } from "../../utils/productValidators/productValidators";
-import { validateProductForm } from "../../utils/productValidators/productValidators";
+import type { IProductFormErrors } from "../../../../utils/productValidators/productValidators";
+import { validateProductForm } from "../../../../utils/productValidators/productValidators";
+import { apiCreateProduct } from "../../../../services/api/warehouseApi";
+import IProduct from "../../../../types/models/IProduct";
+
+interface AddProductFormProps {
+    onProductCreated: (product: IProduct) => void;
+}
 
 /**
  * Form for adding a new product with inline validation feedback.
  */
-export default function AddProductForm() {
+export default function AddProductForm({ onProductCreated }: AddProductFormProps) {
     const [open, setOpen] = useState(false);
     const [fieldErrors, setFieldErrors] = useState<IProductFormErrors>({});
+    const [formError, setFormError] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleNewProduct = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleNewProduct = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+        setFormError(null);
+
+        const form = event.currentTarget;
+        const formData = new FormData(form);
 
         const { errors, values } = validateProductForm(formData);
         setFieldErrors(errors);
 
         if (Object.keys(errors).length) return;
 
-        console.log("Product to add:", values);
+        setIsSubmitting(true);
 
-        alert(`
-Title: ${values.title}
-Quantity: ${values.quantity}
-Supply Status: ${values.supplyStatus ? "In stock" : "Out of stock"}
-Storage Location: ${values.storageLocation}
-    `);
-
-        event.currentTarget.reset();
-        setOpen(false);
-        setFieldErrors({});
+        try {
+            const created = await apiCreateProduct(values);
+            onProductCreated(created);
+            form.reset();
+            setOpen(false);
+            setFieldErrors({});
+        } catch (err) {
+            console.error("Failed to create product", err);
+            setFormError("Failed to create product. Please try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const panelId = "add-product-form-panel";
@@ -58,11 +71,10 @@ Storage Location: ${values.storageLocation}
 
             <div
                 id={panelId}
-                className={`
-          overflow-hidden
-          transition-all duration-300 ease-in-out
-          ${open ? "max-h-[600px] opacity-100 mt-4" : "max-h-0 opacity-0"}
-        `}
+                className={
+                    "overflow-hidden transition-all duration-300 ease-in-out" +
+                    (open ? " max-h-[700px] opacity-100 mt-4" : " max-h-0 opacity-0")
+                }
             >
                 <form
                     onSubmit={handleNewProduct}
@@ -84,11 +96,10 @@ Storage Location: ${values.storageLocation}
                             required
                             aria-invalid={Boolean(fieldErrors.title)}
                             aria-describedby={fieldErrors.title ? "product-title-error" : undefined}
-                            className={`
-                mt-1 px-3 py-2 border rounded-lg w-full
-                focus:outline-none focus:ring-2 focus:ring-amber-400
-                ${fieldErrors.title ? "border-red-500" : "border-amber-300"}
-              `}
+                            className={
+                                "mt-1 px-3 py-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-amber-400" +
+                                (fieldErrors.title ? "border-red-500" : "border-amber-300")
+                            }
                         />
                         {fieldErrors.title && (
                             <p id="product-title-error" role="alert" className="text-red-500 text-sm mt-1">
@@ -110,11 +121,10 @@ Storage Location: ${values.storageLocation}
                             required
                             aria-invalid={Boolean(fieldErrors.quantity)}
                             aria-describedby={fieldErrors.quantity ? "product-quantity-error" : undefined}
-                            className={`
-                mt-1 px-3 py-2 border rounded-lg w-full
-                focus:outline-none focus:ring-2 focus:ring-amber-400
-                ${fieldErrors.quantity ? "border-red-500" : "border-amber-300"}
-              `}
+                            className={
+                                " mt-1 px-3 py-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-amber-400" +
+                                (fieldErrors.quantity ? "border-red-500" : "border-amber-300")
+                            }
                         />
                         {fieldErrors.quantity && (
                             <p id="product-quantity-error" role="alert" className="text-red-500 text-sm mt-1">
@@ -176,11 +186,10 @@ Storage Location: ${values.storageLocation}
                             required
                             aria-invalid={Boolean(fieldErrors.storageLocation)}
                             aria-describedby={fieldErrors.storageLocation ? "storage-location-error" : undefined}
-                            className={`
-                mt-1 px-3 py-2 border rounded-lg w-full bg-white
-                focus:outline-none focus:ring-2 focus:ring-amber-400
-                ${fieldErrors.storageLocation ? "border-red-500" : "border-amber-300"}
-              `}
+                            className={
+                                "mt-1 px-3 py-2 border rounded-lg w-full bg-white focus:outline-none focus:ring-2 focus:ring-amber-400" +
+                                (fieldErrors.storageLocation ? "border-red-500" : "border-amber-300")
+                            }
                         >
                             <option value="" disabled>
                                 Select location
@@ -198,6 +207,12 @@ Storage Location: ${values.storageLocation}
                         )}
                     </div>
 
+                    {formError && (
+                        <div className="md:col-span-4 text-sm text-red-600" role="alert" aria-live="polite">
+                            {formError}
+                        </div>
+                    )}
+
                     <button
                         type="submit"
                         className="
@@ -205,9 +220,11 @@ Storage Location: ${values.storageLocation}
               text-amber-900 rounded-lg py-2 font-medium
               hover:bg-amber-300 hover:shadow-md
               transition-all duration-200
+              disabled:opacity-60 disabled:cursor-not-allowed
             "
+                        disabled={isSubmitting}
                     >
-                        Save product
+                        {isSubmitting ? "Saving..." : "Save product"}
                     </button>
                 </form>
             </div>

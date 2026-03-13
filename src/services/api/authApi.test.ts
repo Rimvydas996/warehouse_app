@@ -1,9 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import axios from "axios";
 import { apiLogin } from "./authApi";
-import LoginResponseInterface from "../model/LoginResponseInterface";
+import ILoginResponse from "../../types/api/ILoginResponse";
 
 vi.mock("axios");
+vi.mock("../../config/api.config", () => ({
+  API_BASE_URL: "https://warehouse-liart.vercel.app",
+}));
 
 const mockLocalStorage = {
   getItem: vi.fn(),
@@ -24,7 +27,7 @@ describe("apiLogin", () => {
   });
 
   it("should successfully login user", async () => {
-    const mockLoginResponse: LoginResponseInterface = {
+    const mockLoginResponse: ILoginResponse = {
       token: mockToken,
       user: {
         _id: "1",

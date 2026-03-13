@@ -1,12 +1,10 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { apiGetAll } from "../src/api/warehoseApi";
 import axios from "axios";
-import ProductInterface from "../src/model/ProductInterface";
+import { apiGetAll } from "./warehoseApi";
+import ProductInterface from "../model/ProductInterface";
 
-// Mock axios
 vi.mock("axios");
 
-// Mock localStorage with proper storage implementation
 const mockStorage: { [key: string]: string } = {};
 const mockLocalStorage = {
   getItem: vi.fn((key: string) => mockStorage[key] || null),
@@ -18,7 +16,6 @@ const mockLocalStorage = {
   }),
 };
 
-// Setup localStorage mock
 vi.stubGlobal("localStorage", mockLocalStorage);
 
 const API_BASE_URL = "https://warehouse-liart.vercel.app";
@@ -62,7 +59,7 @@ describe("apiGetAll", () => {
   });
 
   it("should return empty array when no token is available", async () => {
-    mockStorage["token"] = ""; // Set empty token directly in storage
+    mockStorage["token"] = "";
     vi.mocked(axios.get).mockResolvedValueOnce({
       status: 200,
       data: [],
@@ -73,7 +70,7 @@ describe("apiGetAll", () => {
     expect(mockLocalStorage.getItem).toHaveBeenCalledWith("token");
     expect(axios.get).toHaveBeenCalledWith(`${API_BASE_URL}/warehouse`, {
       headers: {
-        Authorization: `Bearer null`, // Update expectation to match actual behavior
+        Authorization: "Bearer null",
         "Content-Type": "application/json",
         Accept: "application/json",
       },

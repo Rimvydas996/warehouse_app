@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { apiGetAll, apiChangeQuantity } from "../api/warehoseApi";
 import ProductInterface from "../model/ProductInterface";
 import { ExpandLess, MoreVert } from "@mui/icons-material";
+import AddProductForm from "../components/AddProductForm/AddProductForm";
 
 export default function ProductsPage() {
     // State to store all products fetched from backend
@@ -53,6 +54,7 @@ export default function ProductsPage() {
                 <h1 className="text-2xl md:text-3xl font-bold text-amber-900 mb-4 md:mb-8 text-center">
                     Product Management
                 </h1>
+                <AddProductForm />
 
                 {/* Render product list */}
                 <ul className="w-full space-y-3 md:space-y-4">

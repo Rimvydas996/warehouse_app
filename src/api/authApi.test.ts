@@ -1,19 +1,16 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { apiLogin } from "../src/api/authApi";
 import axios from "axios";
-import LoginResponseInterface from "../src/model/LoginResponseInterface";
+import { apiLogin } from "./authApi";
+import LoginResponseInterface from "../model/LoginResponseInterface";
 
-// Mock axios
 vi.mock("axios");
 
-// Mock localStorage before any test runs
 const mockLocalStorage = {
   getItem: vi.fn(),
   setItem: vi.fn(),
   clear: vi.fn(),
 };
 
-// Setup localStorage mock
 vi.stubGlobal("localStorage", mockLocalStorage);
 
 const API_BASE_URL = "https://warehouse-liart.vercel.app";

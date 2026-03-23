@@ -8,4 +8,5 @@ export default interface IAuthContext {
   logout: () => void;
   getToken: () => string | null;
   getUserData: () => IUser | null;
+  updateUser: (user: IUser | null) => void;
 }

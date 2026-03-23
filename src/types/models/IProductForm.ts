@@ -3,6 +3,7 @@ export interface IProductFormErrors {
   quantity?: string;
   supplyStatus?: string;
   storageLocation?: string;
+  refillThreshold?: string;
 }
 
 export interface IProductFormValues {
@@ -10,6 +11,7 @@ export interface IProductFormValues {
   readonly quantity: number;
   readonly supplyStatus: boolean;
   readonly storageLocation: string;
+  readonly refillThreshold?: number;
 }
 
 export interface IProductFormValidationResult {

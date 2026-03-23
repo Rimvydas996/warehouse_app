@@ -1,10 +1,9 @@
-export default function LiProduct({
-  children,
-  onClick,
-}: {
+interface ILiProductProps {
   children: string;
   onClick: () => void;
-}) {
+}
+
+export default function LiProduct({ children, onClick }: ILiProductProps) {
   return (
     <li
       onClick={onClick}

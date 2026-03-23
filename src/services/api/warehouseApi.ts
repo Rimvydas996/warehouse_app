@@ -1,7 +1,8 @@
 import axios, { AxiosError } from "axios";
 import IProduct from "../../types/models/IProduct";
 import { API_BASE_URL } from "../../config/api.config";
-import { IProductFormValues } from "../../utils/productValidators/productValidators";
+import type { IProductFormValues } from "../../types/models/IProductForm";
+import type { IProductUpdatePayload } from "../../types/models/IProductUpdate";
 
 const buildAuthHeaders = (token: string | null) => ({
   Authorization: `Bearer ${token}`,
@@ -124,6 +125,27 @@ async function apiSetQuantity(id: string, quantity: number): Promise<IProduct> {
   }
 }
 
+async function apiUpdateProduct(id: string, payload: IProductUpdatePayload): Promise<IProduct> {
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await axios.patch(`${API_BASE_URL}/warehouse/${id}`, payload, {
+      headers: buildAuthHeaders(token),
+      withCredentials: true,
+    });
+    return res.data as IProduct;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Update product error:", {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+    }
+    throw error;
+  }
+}
+
 async function apiDeleteProduct(id: string): Promise<void> {
   const token = localStorage.getItem("token");
 
@@ -144,4 +166,12 @@ async function apiDeleteProduct(id: string): Promise<void> {
   }
 }
 
-export { apiGetAll, apiGetById, apiCreateProduct, apiChangeQuantity, apiSetQuantity, apiDeleteProduct };
+export {
+  apiGetAll,
+  apiGetById,
+  apiCreateProduct,
+  apiChangeQuantity,
+  apiSetQuantity,
+  apiUpdateProduct,
+  apiDeleteProduct,
+};

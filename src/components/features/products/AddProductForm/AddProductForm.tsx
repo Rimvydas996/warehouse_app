@@ -1,9 +1,10 @@
 import { useState, type FormEvent } from "react";
 import { Add, ExpandLess } from "@mui/icons-material";
-import type { IProductFormErrors } from "../../../../utils/productValidators/productValidators";
+import type { IProductFormErrors } from "../../../../types/models/IProductForm";
 import { validateProductForm } from "../../../../utils/productValidators/productValidators";
 import { apiCreateProduct } from "../../../../services/api/warehouseApi";
 import IProduct from "../../../../types/models/IProduct";
+import { PRODUCT_LOCATIONS } from "../../../../utils/productLocations/productLocations";
 
 interface AddProductFormProps {
     onProductCreated: (product: IProduct) => void;
@@ -194,11 +195,11 @@ export default function AddProductForm({ onProductCreated }: AddProductFormProps
                             <option value="" disabled>
                                 Select location
                             </option>
-                            <option value="warehouse-a">Warehouse A</option>
-                            <option value="warehouse-b">Warehouse B</option>
-                            <option value="shelf-1">Shelf 1</option>
-                            <option value="shelf-2">Shelf 2</option>
-                            <option value="front-store">Front Store</option>
+                            {PRODUCT_LOCATIONS.map((location) => (
+                                <option key={location.value} value={location.value}>
+                                    {location.label}
+                                </option>
+                            ))}
                         </select>
                         {fieldErrors.storageLocation && (
                             <p id="storage-location-error" role="alert" className="text-red-500 text-sm mt-1">

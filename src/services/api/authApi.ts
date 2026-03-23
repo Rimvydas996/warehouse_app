@@ -54,4 +54,34 @@ async function apiRegister(submittedData: ICredentials) {
     return false;
 }
 
-export { apiLogin, apiRegister };
+async function apiUpdateThemePreference(themePreference: string) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        throw new Error("Authentication token missing");
+    }
+    try {
+        const response = await axios.patch(
+            `${API_BASE_URL}/auth/theme`,
+            { themePreference },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.error("Theme update error details:", {
+                message: error.message,
+                status: error.response?.status,
+                data: error.response?.data,
+            });
+        }
+        throw error;
+    }
+}
+
+export { apiLogin, apiRegister, apiUpdateThemePreference };

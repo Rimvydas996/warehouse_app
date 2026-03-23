@@ -1,5 +1,6 @@
 // ThemeContext.js
 import React, { createContext, useState, useContext, useCallback, useEffect } from "react";
+import { apiUpdateThemePreference } from "../services/api/authApi";
 
 type ThemeName =
   | "sunrise"
@@ -38,7 +39,6 @@ const ThemeContext = createContext<ThemeContextValue>({
   toggleTheme: () => {},
 });
 
-const THEME_STORAGE_KEY = "themePreference";
 const THEME_CLASS_PREFIX = "theme-";
 const THEMES: ThemeName[] = [
   "sunrise",
@@ -61,9 +61,6 @@ const DARK_THEMES: ThemeName[] = [
 ];
 
 const getInitialTheme = (): ThemeName => {
-  const stored = localStorage.getItem(THEME_STORAGE_KEY) as ThemeName | null;
-  if (stored && THEMES.includes(stored)) return stored;
-
   const userRaw = localStorage.getItem("user");
   if (userRaw) {
     try {
@@ -81,13 +78,13 @@ const getInitialTheme = (): ThemeName => {
 };
 
 const persistTheme = (theme: ThemeName) => {
-  localStorage.setItem(THEME_STORAGE_KEY, theme);
   const userRaw = localStorage.getItem("user");
   if (!userRaw) return;
   try {
     const user = JSON.parse(userRaw);
     const nextUser = { ...user, themePreference: theme };
     localStorage.setItem("user", JSON.stringify(nextUser));
+    window.dispatchEvent(new CustomEvent("user:updated"));
   } catch (error) {
     console.error("Failed to persist user theme preference:", error);
   }
@@ -106,7 +103,33 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.remove("dark");
     }
     persistTheme(theme);
+    if (localStorage.getItem("token")) {
+      apiUpdateThemePreference(theme).catch((error) => {
+        console.error("Failed to sync theme preference:", error);
+      });
+    }
   }, [theme]);
+
+  useEffect(() => {
+    const handleUserUpdate = () => {
+      const userRaw = localStorage.getItem("user");
+      if (!userRaw) return;
+      try {
+        const user = JSON.parse(userRaw);
+        const userTheme = user?.themePreference as ThemeName | undefined;
+        if (userTheme && THEMES.includes(userTheme)) {
+          setThemeState(userTheme);
+        }
+      } catch (error) {
+        console.error("Failed to sync theme with user:", error);
+      }
+    };
+
+    window.addEventListener("user:updated", handleUserUpdate);
+    return () => {
+      window.removeEventListener("user:updated", handleUserUpdate);
+    };
+  }, []);
 
   const setTheme = useCallback((nextTheme: ThemeName) => {
     setThemeState(nextTheme);

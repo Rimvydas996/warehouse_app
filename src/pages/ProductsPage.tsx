@@ -397,6 +397,7 @@ export default function ProductsPage() {
   const activeRole = activeMembership?.role ?? user?.role;
   const isManager = activeRole === "admin" || activeRole === "manager";
   const isAdmin = activeRole === "admin";
+  const canCreateProducts = isManager;
   const locations = warehouseOverview?.warehouse?.locations ?? [];
   const refillItems = products.filter((product) => {
     const threshold = product.refillThreshold ?? 0;
@@ -510,7 +511,15 @@ export default function ProductsPage() {
 
         {activeTab === "products" && hasWarehouse && (
           <>
-            <AddProductForm onProductCreated={handleProductCreated} locations={locations} />
+            {canCreateProducts ? (
+              <AddProductForm onProductCreated={handleProductCreated} locations={locations} />
+            ) : (
+              <div className="bg-white p-4 md:p-6 rounded-xl shadow-md border border-amber-200 mb-6">
+                <p className="text-amber-900 text-sm">
+                  Only admins and managers can add new items.
+                </p>
+              </div>
+            )}
 
             {isLoading && (
               <div className="py-6 flex justify-center">

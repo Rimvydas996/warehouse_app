@@ -48,6 +48,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
     return JSON.parse(user);
   };
+  const notifyUserUpdate = () => {
+    window.dispatchEvent(new CustomEvent("user:updated"));
+  };
+
   const login = async (inputs: ICredentials): Promise<boolean> => {
     const user: ILoginResponse | false = await apiLogin(inputs);
 
@@ -56,6 +60,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem("user", JSON.stringify(user.user));
       setIsAuthenticated(true);
       setUser(user.user);
+      notifyUserUpdate();
       return true;
     }
     return false;
@@ -66,11 +71,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsAuthenticated(false);
       setUser(null);
       localStorage.removeItem("user");
+      notifyUserUpdate();
       return;
     }
     setIsAuthenticated(true);
     setUser(nextUser);
     localStorage.setItem("user", JSON.stringify(nextUser));
+    notifyUserUpdate();
   };
 
   const logout = () => {
@@ -78,6 +85,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    notifyUserUpdate();
     setIsAuthenticated(false);
     navigate("/login");
   };

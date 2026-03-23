@@ -9,6 +9,17 @@ export default interface IUser {
   email: string;
   role: UserRole;
   activeWarehouseId?: string | null;
+  themePreference?:
+    | "sunrise"
+    | "ocean"
+    | "sage"
+    | "slate"
+    | "sand"
+    | "sunrise-dark"
+    | "ocean-dark"
+    | "sage-dark"
+    | "slate-dark"
+    | "sand-dark";
   premission?: IPermission[];
   createdAt?: Date;
   updatedAt?: Date;

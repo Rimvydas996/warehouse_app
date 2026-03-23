@@ -6,6 +6,7 @@ export interface IWarehouse {
   name: string;
   ownerId: string;
   locations: string[];
+  homeContainers?: IHomeContainer[];
 }
 
 export interface IWarehouseMember {
@@ -24,4 +25,11 @@ export interface IWarehouseOverview {
   warehouse: IWarehouse;
   members: IWarehouseMember[];
   products: IProduct[];
+}
+
+export interface IHomeContainer {
+  _id: string;
+  title: string;
+  description: string;
+  tasks: string;
 }

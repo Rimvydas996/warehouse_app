@@ -1,5 +1,6 @@
 import IProduct from "../../../../types/models/IProduct";
 import ProductDeleteButton from "../ProductDeleteButton";
+import formatLocationLabel from "../../../../utils/formatters/formatLocationLabel";
 
 interface IProductDetailsPanelProps {
   product: IProduct;
@@ -44,16 +45,13 @@ export default function ProductDetailsPanel({
   onUpdateThreshold,
   onDelete,
 }: IProductDetailsPanelProps) {
-  const formatLocationLabel = (value: string) =>
-    value.replace(/-/g, " ").replace(/\b\w/g, (match) => match.toUpperCase());
-
   const availableLocations = locations.includes(product.storageLocation)
     ? locations
     : [product.storageLocation, ...locations];
 
   return (
     <div className="col-span-2 md:col-span-4 flex flex-col gap-2 mt-2 md:mt-0">
-      <div className="w-full md:w-auto flex flex-col gap-1 text-sm text-amber-900">
+      <div className="w-full md:w-auto flex flex-col gap-1 text-sm theme-label">
         <span>Status: {product.supplyStatus ? "In stock" : "Out of stock"}</span>
         <span>Location: {product.storageLocation}</span>
       </div>
@@ -64,21 +62,13 @@ export default function ProductDetailsPanel({
           onChange={(event) => onAdjustInputChange(event.target.value)}
           placeholder="Units"
           min="1"
-          className="w-full md:w-32 px-2 py-1 border border-amber-300 rounded"
+          className="w-full md:w-32 px-2 py-1 rounded theme-input"
           disabled={isUpdating || isDeleting}
         />
         <button
           type="button"
           onClick={onIncreaseQuantity}
-          className="
-            bg-amber-200 px-3 py-1
-            rounded-lg border border-amber-300
-            hover:bg-amber-300 hover:shadow-md
-            transition-all duration-200
-            text-amber-900
-            w-full md:w-auto
-            disabled:opacity-60 disabled:cursor-not-allowed
-          "
+          className="theme-button px-3 py-1 rounded-lg transition-all duration-200 w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
           disabled={isUpdating || isDeleting}
         >
           {isUpdating ? "Updating..." : "Increase"}
@@ -86,15 +76,7 @@ export default function ProductDetailsPanel({
         <button
           type="button"
           onClick={onDecreaseQuantity}
-          className="
-            bg-amber-200 px-3 py-1
-            rounded-lg border border-amber-300
-            hover:bg-amber-300 hover:shadow-md
-            transition-all duration-200
-            text-amber-900
-            w-full md:w-auto
-            disabled:opacity-60 disabled:cursor-not-allowed
-          "
+          className="theme-button px-3 py-1 rounded-lg transition-all duration-200 w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
           disabled={isUpdating || isDeleting}
         >
           {isUpdating ? "Updating..." : "Decrease"}
@@ -107,21 +89,13 @@ export default function ProductDetailsPanel({
           value={setValue}
           onChange={(event) => onSetInputChange(event.target.value)}
           placeholder="Set stock"
-          className="w-full md:w-32 px-2 py-1 border border-amber-300 rounded"
+          className="w-full md:w-32 px-2 py-1 rounded theme-input"
           disabled={isUpdating || isDeleting}
         />
         <button
           type="button"
           onClick={onSetQuantity}
-          className="
-            bg-amber-200 px-3 py-1
-            rounded-lg border border-amber-300
-            hover:bg-amber-300 hover:shadow-md
-            transition-all duration-200
-            text-amber-900
-            w-full md:w-auto
-            disabled:opacity-60 disabled:cursor-not-allowed
-          "
+          className="theme-button px-3 py-1 rounded-lg transition-all duration-200 w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
           disabled={isUpdating || isDeleting}
         >
           {isUpdating ? "Updating..." : "Set"}
@@ -131,7 +105,7 @@ export default function ProductDetailsPanel({
         <select
           value={locationValue}
           onChange={(event) => onLocationChange(event.target.value)}
-          className="w-full md:w-48 px-2 py-1 border border-amber-300 rounded bg-white"
+          className="w-full md:w-48 px-2 py-1 rounded theme-input"
           disabled={isUpdating || isDeleting}
         >
           <option value="" disabled>
@@ -146,15 +120,7 @@ export default function ProductDetailsPanel({
         <button
           type="button"
           onClick={onUpdateLocation}
-          className="
-            bg-amber-200 px-3 py-1
-            rounded-lg border border-amber-300
-            hover:bg-amber-300 hover:shadow-md
-            transition-all duration-200
-            text-amber-900
-            w-full md:w-auto
-            disabled:opacity-60 disabled:cursor-not-allowed
-          "
+          className="theme-button px-3 py-1 rounded-lg transition-all duration-200 w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
           disabled={isUpdating || isDeleting}
         >
           {isUpdating ? "Updating..." : "Update location"}
@@ -168,26 +134,18 @@ export default function ProductDetailsPanel({
             value={thresholdValue}
             onChange={(event) => onThresholdChange(event.target.value)}
             placeholder="Set threshold"
-            className="w-full md:w-32 px-2 py-1 border border-amber-300 rounded"
+            className="w-full md:w-32 px-2 py-1 rounded theme-input"
             disabled={isUpdating || isDeleting}
           />
           <button
             type="button"
             onClick={onUpdateThreshold}
-            className="
-              bg-amber-200 px-3 py-1
-              rounded-lg border border-amber-300
-              hover:bg-amber-300 hover:shadow-md
-              transition-all duration-200
-              text-amber-900
-              w-full md:w-auto
-              disabled:opacity-60 disabled:cursor-not-allowed
-            "
+            className="theme-button px-3 py-1 rounded-lg transition-all duration-200 w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
             disabled={isUpdating || isDeleting}
           >
             {isUpdating ? "Updating..." : "Update threshold"}
           </button>
-          <span className="text-amber-700 text-xs self-center">
+          <span className="theme-muted text-xs self-center">
             Current: {product.refillThreshold ?? 0}
           </span>
         </div>

@@ -36,11 +36,11 @@ export default function LoginForm(): JSX.Element {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <h2 className="text-3xl font-bold text-amber-900 text-center mb-8">
+        <h2 className="text-3xl font-bold theme-label text-center mb-8">
           Login to Warehouse
         </h2>
 
-        <div className="bg-white p-8 rounded-xl shadow-lg border border-amber-200 w-full">
+        <div className="theme-card theme-card-elevated p-8 w-full">
           <Form onSubmit={loginHandler}>
             <Input
               id="email"

@@ -6,9 +6,12 @@ import { ThemeProvider } from "./context/ThemeContext";
 import PrivateRoute from "./routes/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import ProductsPage from "./pages/ProductsPage";
+import ManageWarehousePage from "./pages/ManageWarehousePage";
+import RefillNeededPage from "./pages/RefillNeededPage";
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
+const HomeContainersPage = lazy(() => import("./pages/HomeContainersPage"));
 
 function App() {
   return (
@@ -27,6 +30,30 @@ function App() {
                     <PrivateRoute>
                     <ProductsPage />
                     </PrivateRoute>
+                }
+              />
+              <Route
+                path="/warehouse/manage"
+                element={
+                  <PrivateRoute>
+                    <ManageWarehousePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/warehouse/home-containers"
+                element={
+                  <PrivateRoute>
+                    <HomeContainersPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/warehouse/refill-needed"
+                element={
+                  <PrivateRoute>
+                    <RefillNeededPage />
+                  </PrivateRoute>
                 }
               />
             </Routes>

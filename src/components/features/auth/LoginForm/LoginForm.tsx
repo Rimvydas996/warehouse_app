@@ -36,7 +36,7 @@ export default function LoginForm(): JSX.Element {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <h2 className="text-3xl font-bold text-amber-900 text-center mb-8">
+        <h2 className="text-3xl font-bold theme-label text-center mb-8">
           Login to Warehouse
         </h2>
 

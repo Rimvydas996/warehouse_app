@@ -14,12 +14,7 @@ export default function NavigationBar(): JSX.Element {
     >
       <h3
         onClick={() => navigate("/")}
-        className="
-          text-amber-900 text-xl font-bold
-          hover:text-amber-700 cursor-pointer
-          transition-colors duration-200
-          px-4 py-2 rounded-lg
-        "
+        className="theme-link text-xl font-bold cursor-pointer transition-colors duration-200 px-4 py-2 rounded-lg"
       >
         Warehouse
       </h3>

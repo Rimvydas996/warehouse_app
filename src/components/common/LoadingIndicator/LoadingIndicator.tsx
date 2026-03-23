@@ -19,8 +19,7 @@ export default function LoadingIndicator({
   labelClassName,
   spinnerClassName,
 }: ILoadingIndicatorProps) {
-  const spinnerClasses =
-    spinnerClassName ?? "border-amber-200 border-t-amber-700";
+  const spinnerClasses = spinnerClassName ?? "theme-spinner";
 
   return (
     <div
@@ -33,7 +32,7 @@ export default function LoadingIndicator({
         aria-hidden="true"
       />
       {label && (
-        <span className={labelClassName ?? "text-amber-900 text-sm font-medium"}>
+        <span className={labelClassName ?? "theme-label text-sm font-medium"}>
           {label}
         </span>
       )}

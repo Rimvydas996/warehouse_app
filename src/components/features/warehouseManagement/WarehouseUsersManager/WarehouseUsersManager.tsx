@@ -34,7 +34,7 @@ export default function WarehouseUsersManager({
 
   return (
     <section className="theme-card p-4 md:p-6">
-      <h3 className="text-lg font-semibold text-amber-900 mb-3">Users</h3>
+      <h3 className="text-lg font-semibold theme-label mb-3">Users</h3>
 
       {isAdmin && (
         <form className="flex flex-col md:flex-row gap-3 mb-4" onSubmit={handleAdd}>
@@ -76,7 +76,7 @@ export default function WarehouseUsersManager({
             >
               <div>
                 <p className="theme-label text-sm font-medium">{member.email}</p>
-                <p className="text-amber-700 text-xs">Role: {member.role}</p>
+                <p className="theme-muted text-xs">Role: {member.role}</p>
               </div>
               {isAdmin && (
                 <div className="flex flex-col md:flex-row gap-2">

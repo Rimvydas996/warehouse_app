@@ -4,3 +4,8 @@ export { default as ProductDetailsPanel } from "./ProductDetailsPanel";
 export { default as ProductDetailsToggleButton } from "./ProductDetailsToggleButton";
 export { default as ProductList } from "./ProductList";
 export { default as ProductListItem } from "./ProductListItem";
+export { default as ProductsPageLayout } from "./ProductsPageLayout";
+export { default as ProductsSection } from "./ProductsSection";
+export { default as ProductsTabs } from "./ProductsTabs";
+export { default as RefillSection } from "./RefillSection";
+export { default as WarehouseSelectorCard } from "./WarehouseSelectorCard";

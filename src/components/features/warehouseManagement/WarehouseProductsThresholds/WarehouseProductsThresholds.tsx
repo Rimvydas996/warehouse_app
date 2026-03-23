@@ -29,9 +29,9 @@ export default function WarehouseProductsThresholds({
 
   return (
     <section className="theme-card p-4 md:p-6">
-      <h3 className="text-lg font-semibold text-amber-900 mb-3">Refill thresholds</h3>
+      <h3 className="text-lg font-semibold theme-label mb-3">Refill thresholds</h3>
       {products.length === 0 ? (
-        <p className="text-amber-700 text-sm">No products available.</p>
+        <p className="theme-muted text-sm">No products available.</p>
       ) : (
         <ul className="space-y-2">
           {products.map((product) => (
@@ -41,7 +41,7 @@ export default function WarehouseProductsThresholds({
             >
               <div>
                 <p className="theme-label text-sm font-medium">{product.title}</p>
-                <p className="text-amber-700 text-xs">
+                <p className="theme-muted text-xs">
                   Current stock: {product.quantity} | Threshold: {product.refillThreshold ?? 0}
                 </p>
               </div>

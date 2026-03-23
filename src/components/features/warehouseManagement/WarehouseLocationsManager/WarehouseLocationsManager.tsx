@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import formatLocationLabel from "../../../../utils/formatters/formatLocationLabel";
 
 interface IWarehouseLocationsManagerProps {
   locations: string[];
@@ -6,9 +7,6 @@ interface IWarehouseLocationsManagerProps {
   onRemoveLocation: (location: string) => void;
   isUpdating: boolean;
 }
-
-const formatLocationLabel = (value: string) =>
-  value.replace(/-/g, " ").replace(/\b\w/g, (match) => match.toUpperCase());
 
 export default function WarehouseLocationsManager({
   locations,
@@ -28,7 +26,7 @@ export default function WarehouseLocationsManager({
 
   return (
     <section className="theme-card p-4 md:p-6">
-      <h3 className="text-lg font-semibold text-amber-900 mb-3">Locations</h3>
+      <h3 className="text-lg font-semibold theme-label mb-3">Locations</h3>
       <form className="flex flex-col md:flex-row gap-3 mb-4" onSubmit={handleAdd}>
         <input
           type="text"

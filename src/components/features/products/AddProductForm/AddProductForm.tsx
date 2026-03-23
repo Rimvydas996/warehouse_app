@@ -134,7 +134,7 @@ export default function AddProductForm({ onProductCreated, locations }: AddProdu
                             placeholder="Set threshold (optional)"
                             className="mt-1 px-3 py-2 rounded-lg w-full theme-input focus:outline-none focus:ring-2 focus:ring-amber-400"
                         />
-                        <p className="text-amber-700 text-sm mt-1">
+                        <p className="theme-muted text-sm mt-1">
                             Optional: show in Refill Needed when stock is at or below this number.
                         </p>
                     </div>
@@ -207,7 +207,7 @@ export default function AddProductForm({ onProductCreated, locations }: AddProdu
                             ))}
                         </select>
                         {!locations?.length && (
-                            <p className="text-amber-700 text-sm mt-2">
+                            <p className="theme-muted text-sm mt-2">
                                 Add locations in the Manage Warehouse tab before creating products.
                             </p>
                         )}

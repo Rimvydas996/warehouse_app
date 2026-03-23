@@ -1,5 +1,6 @@
 import IProduct from "../../../../types/models/IProduct";
 import ProductDeleteButton from "../ProductDeleteButton";
+import formatLocationLabel from "../../../../utils/formatters/formatLocationLabel";
 
 interface IProductDetailsPanelProps {
   product: IProduct;
@@ -44,9 +45,6 @@ export default function ProductDetailsPanel({
   onUpdateThreshold,
   onDelete,
 }: IProductDetailsPanelProps) {
-  const formatLocationLabel = (value: string) =>
-    value.replace(/-/g, " ").replace(/\b\w/g, (match) => match.toUpperCase());
-
   const availableLocations = locations.includes(product.storageLocation)
     ? locations
     : [product.storageLocation, ...locations];
@@ -147,7 +145,7 @@ export default function ProductDetailsPanel({
           >
             {isUpdating ? "Updating..." : "Update threshold"}
           </button>
-          <span className="text-amber-700 text-xs self-center">
+          <span className="theme-muted text-xs self-center">
             Current: {product.refillThreshold ?? 0}
           </span>
         </div>

@@ -10,19 +10,8 @@ export default function ProductDetailsToggleButton({
   onToggle,
 }: IProductDetailsToggleButtonProps) {
   const buttonClassName = isExpanded
-    ? `
-        bg-amber-200 p-1
-        border-2 border-amber-900 rounded-lg
-        hover:bg-amber-300
-        transition-all duration-200
-      `
-    : `
-        bg-amber-200 p-1.5 md:p-2
-        rounded-lg border border-amber-300
-        hover:bg-amber-300 hover:shadow-md
-        transition-all duration-200
-        text-amber-900
-      `;
+    ? "theme-button p-1 rounded-lg border-2 transition-all duration-200"
+    : "theme-button p-1.5 md:p-2 rounded-lg transition-all duration-200 hover:shadow-md";
 
   return (
     <button

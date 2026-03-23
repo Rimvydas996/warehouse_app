@@ -23,7 +23,7 @@ export default function WarehouseCreateForm({
 
   return (
     <div className="theme-card p-4 md:p-6">
-      <h2 className="text-xl font-semibold text-amber-900 mb-3">Create Warehouse</h2>
+      <h2 className="text-xl font-semibold theme-label mb-3">Create Warehouse</h2>
       <form className="flex flex-col md:flex-row gap-3" onSubmit={handleSubmit}>
         <input
           type="text"

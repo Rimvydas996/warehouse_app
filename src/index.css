@@ -606,6 +606,24 @@ body {
   color: var(--app-text);
 }
 
+.theme-muted {
+  color: var(--app-muted);
+}
+
+.theme-link {
+  color: var(--app-text);
+  transition: color 0.2s ease;
+}
+
+.theme-link:hover {
+  color: var(--app-accent-700);
+}
+
+.theme-spinner {
+  border-color: var(--app-accent-200);
+  border-top-color: var(--app-accent-700);
+}
+
 .theme-input {
   background-color: var(--app-surface);
   color: var(--app-text);

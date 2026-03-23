@@ -17,7 +17,7 @@ export default function Menu() {
     <>
       {!open && (
         <div className="md:hidden justify-between items-center ">
-          <button className="bg-amber-600 p-1 m-0 rounded-full" onClick={() => setOpen(!open)}>
+          <button className="theme-button-strong p-1 m-0 rounded-full" onClick={() => setOpen(!open)}>
             {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +40,7 @@ export default function Menu() {
       {open && (
         <div className="md:hidden fixed top-0 bg-gradient-to-r from-amber-800 to-amber-600 left-0 w-screen h-screen flex flex-col items-center justify-start p-4">
           <button
-            className="bg-amber-600 p-1 m-0 rounded-full self-start"
+            className="theme-button-strong p-1 m-0 rounded-full self-start"
             onClick={() => setOpen(!open)}
           >
             {" "}

@@ -3,8 +3,6 @@ import type { FormEvent, ReactNode } from "react";
 interface FormProps {
   children: ReactNode;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
-  buttonText?: string;
-  setError?: (message: string) => void;
 }
 
 export default function Form({ children, onSubmit }: FormProps): JSX.Element {

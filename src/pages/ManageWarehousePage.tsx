@@ -64,7 +64,6 @@ export default function ManageWarehousePage() {
         isManaging={isManaging}
         isCreatingWarehouse={isCreatingWarehouse}
         showCreateWarehouse={showCreateWarehouse}
-        showCreateWarehouseControls={false}
         currentUserId={user?._id}
         onToggleCreateWarehouse={() => setShowCreateWarehouse((prev) => !prev)}
         onCreateWarehouse={handleCreateWarehouse}

@@ -13,6 +13,7 @@ export default function WarehouseHomeContainersManager({
   containers,
   onAddContainer,
   onRemoveContainer,
+  onUpdateTasks,
   isUpdating,
 }: IWarehouseHomeContainersManagerProps) {
   const [title, setTitle] = useState("");

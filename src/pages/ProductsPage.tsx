@@ -19,6 +19,7 @@ export default function ProductsPage() {
     thresholdInputs,
     isLoading,
     loadError,
+    manageError,
     isCreatingWarehouse,
     showCreateWarehouse,
     updatingId,

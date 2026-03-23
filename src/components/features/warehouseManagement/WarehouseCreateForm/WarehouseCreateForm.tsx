@@ -5,14 +5,19 @@ interface IWarehouseCreateFormProps {
   onCreate: (name: string) => Promise<void>;
   isSubmitting: boolean;
   error?: string | null;
+  variant?: "card" | "inline";
+  showTitle?: boolean;
 }
 
 export default function WarehouseCreateForm({
   onCreate,
   isSubmitting,
   error,
+  variant = "card",
+  showTitle = true,
 }: IWarehouseCreateFormProps) {
   const [name, setName] = useState("");
+  const isInline = variant === "inline";
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,8 +27,8 @@ export default function WarehouseCreateForm({
   };
 
   return (
-    <div className="theme-card p-4 md:p-6">
-      <h2 className="text-xl font-semibold theme-label mb-3">Create Warehouse</h2>
+    <div className={isInline ? "theme-card p-4 md:p-6" : "theme-card p-4 md:p-6"}>
+      {showTitle && <h2 className="text-xl font-semibold theme-label mb-3">Create Warehouse</h2>}
       <form className="flex flex-col md:flex-row gap-3" onSubmit={handleSubmit}>
         <input
           type="text"

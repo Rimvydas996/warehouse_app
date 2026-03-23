@@ -4,16 +4,16 @@ import type { IProductFormErrors } from "../../../../types/models/IProductForm";
 import { validateProductForm } from "../../../../utils/productValidators/productValidators";
 import { apiCreateProduct } from "../../../../services/api/warehouseApi";
 import IProduct from "../../../../types/models/IProduct";
-import { PRODUCT_LOCATIONS } from "../../../../utils/productLocations/productLocations";
 
 interface AddProductFormProps {
     onProductCreated: (product: IProduct) => void;
+    locations?: string[];
 }
 
 /**
  * Form for adding a new product with inline validation feedback.
  */
-export default function AddProductForm({ onProductCreated }: AddProductFormProps) {
+export default function AddProductForm({ onProductCreated, locations }: AddProductFormProps) {
     const [open, setOpen] = useState(false);
     const [fieldErrors, setFieldErrors] = useState<IProductFormErrors>({});
     const [formError, setFormError] = useState<string | null>(null);
@@ -134,6 +134,23 @@ export default function AddProductForm({ onProductCreated }: AddProductFormProps
                         )}
                     </div>
 
+                    <div className="md:col-span-4">
+                        <label htmlFor="refill-threshold" className="block text-amber-900 text-sm font-medium">
+                            Refill threshold
+                        </label>
+                        <input
+                            id="refill-threshold"
+                            name="refillThreshold"
+                            type="number"
+                            min="0"
+                            placeholder="Set threshold (optional)"
+                            className="mt-1 px-3 py-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-amber-400 border-amber-300"
+                        />
+                        <p className="text-amber-700 text-sm mt-1">
+                            Optional: show in Refill Needed when stock is at or below this number.
+                        </p>
+                    </div>
+
                     <fieldset
                         className="md:col-span-4"
                         aria-describedby={fieldErrors.supplyStatus ? "supply-status-error" : undefined}
@@ -195,12 +212,17 @@ export default function AddProductForm({ onProductCreated }: AddProductFormProps
                             <option value="" disabled>
                                 Select location
                             </option>
-                            {PRODUCT_LOCATIONS.map((location) => (
-                                <option key={location.value} value={location.value}>
-                                    {location.label}
+                            {(locations ?? []).map((location) => (
+                                <option key={location} value={location}>
+                                    {location}
                                 </option>
                             ))}
                         </select>
+                        {!locations?.length && (
+                            <p className="text-amber-700 text-sm mt-2">
+                                Add locations in the Manage Warehouse tab before creating products.
+                            </p>
+                        )}
                         {fieldErrors.storageLocation && (
                             <p id="storage-location-error" role="alert" className="text-red-500 text-sm mt-1">
                                 {fieldErrors.storageLocation}

@@ -4,4 +4,6 @@ export default interface IProduct {
   supplyStatus: boolean;
   storageLocation: string;
   _id: string;
+  refillThreshold?: number;
+  warehouseId?: string;
 }

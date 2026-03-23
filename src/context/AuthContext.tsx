@@ -13,6 +13,7 @@ export const AuthContext = createContext<IAuthContext & { isReady: boolean }>({
   logout: () => {},
   getToken: () => null,
   getUserData: () => null,
+  updateUser: () => {},
   isReady: false,
 });
 
@@ -60,6 +61,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return false;
   };
 
+  const updateUser = (nextUser: IUser | null) => {
+    if (!nextUser) {
+      setIsAuthenticated(false);
+      setUser(null);
+      localStorage.removeItem("user");
+      return;
+    }
+    setIsAuthenticated(true);
+    setUser(nextUser);
+    localStorage.setItem("user", JSON.stringify(nextUser));
+  };
+
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
@@ -71,7 +84,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, login: login, logout, getToken, getUserData, isReady }}
+      value={{ isAuthenticated, user, login: login, logout, getToken, getUserData, updateUser, isReady }}
     >
       {children}
     </AuthContext.Provider>

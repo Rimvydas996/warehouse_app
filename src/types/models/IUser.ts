@@ -2,11 +2,14 @@ export interface IPermission {
   type: string;
 }
 
+export type UserRole = "admin" | "manager" | "member" | "user";
+
 export default interface IUser {
   _id: string;
   email: string;
-  role: string;
-  premission: IPermission[];
-  createdAt: Date;
-  updatedAt: Date;
+  role: UserRole;
+  activeWarehouseId?: string | null;
+  premission?: IPermission[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }

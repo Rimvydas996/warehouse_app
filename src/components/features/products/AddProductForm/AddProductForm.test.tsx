@@ -24,6 +24,7 @@ describe("AddProductForm", () => {
     expect(toggle).toHaveAttribute("aria-expanded", "true");
     expect(screen.getByLabelText(/product title/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/quantity/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/refill threshold/i)).toBeInTheDocument();
     expect(screen.getByText(/supply status/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/storage location/i)).toBeInTheDocument();
   });
@@ -49,6 +50,7 @@ describe("AddProductForm", () => {
       quantity: 3,
       supplyStatus: true,
       storageLocation: "warehouse-a",
+      refillThreshold: 2,
     });
 
     render(<AddProductForm onProductCreated={onProductCreated} />);
@@ -60,6 +62,9 @@ describe("AddProductForm", () => {
     });
     fireEvent.change(screen.getByLabelText(/quantity/i), {
       target: { value: "3" },
+    });
+    fireEvent.change(screen.getByLabelText(/refill threshold/i), {
+      target: { value: "2" },
     });
     fireEvent.click(screen.getByLabelText(/in stock/i));
     fireEvent.change(screen.getByLabelText(/storage location/i), {

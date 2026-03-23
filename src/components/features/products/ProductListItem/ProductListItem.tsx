@@ -10,14 +10,19 @@ interface IProductListItemProps {
   adjustValue: string;
   setValue: string;
   locationValue: string;
+  locations: string[];
+  thresholdValue: string;
+  isAdmin: boolean;
   onToggleDetails: () => void;
   onAdjustInputChange: (value: string) => void;
   onSetInputChange: (value: string) => void;
   onLocationChange: (value: string) => void;
+  onThresholdChange: (value: string) => void;
   onIncreaseQuantity: () => void;
   onDecreaseQuantity: () => void;
   onSetQuantity: () => void;
   onUpdateLocation: () => void;
+  onUpdateThreshold: () => void;
   onDelete: () => void;
 }
 
@@ -29,14 +34,19 @@ export default function ProductListItem({
   adjustValue,
   setValue,
   locationValue,
+  locations,
+  thresholdValue,
+  isAdmin,
   onToggleDetails,
   onAdjustInputChange,
   onSetInputChange,
   onLocationChange,
+  onThresholdChange,
   onIncreaseQuantity,
   onDecreaseQuantity,
   onSetQuantity,
   onUpdateLocation,
+  onUpdateThreshold,
   onDelete,
 }: IProductListItemProps) {
   return (
@@ -67,15 +77,20 @@ export default function ProductListItem({
           adjustValue={adjustValue}
           setValue={setValue}
           locationValue={locationValue}
+          locations={locations}
+          thresholdValue={thresholdValue}
+          isAdmin={isAdmin}
           isUpdating={isUpdating}
           isDeleting={isDeleting}
           onAdjustInputChange={onAdjustInputChange}
           onSetInputChange={onSetInputChange}
           onLocationChange={onLocationChange}
+          onThresholdChange={onThresholdChange}
           onIncreaseQuantity={onIncreaseQuantity}
           onDecreaseQuantity={onDecreaseQuantity}
           onSetQuantity={onSetQuantity}
           onUpdateLocation={onUpdateLocation}
+          onUpdateThreshold={onUpdateThreshold}
           onDelete={onDelete}
         />
       )}

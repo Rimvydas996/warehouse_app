@@ -7,6 +7,9 @@ interface IProductListProps {
   adjustInputs: Record<string, string>;
   setInputs: Record<string, string>;
   locationInputs: Record<string, string>;
+  thresholdInputs: Record<string, string>;
+  locations: string[];
+  isAdmin: boolean;
   updatingId: string | null;
   deletingId: string | null;
   isLoading: boolean;
@@ -14,10 +17,12 @@ interface IProductListProps {
   onAdjustInputChange: (id: string, value: string) => void;
   onSetInputChange: (id: string, value: string) => void;
   onLocationChange: (id: string, value: string) => void;
+  onThresholdChange: (id: string, value: string) => void;
   onIncreaseQuantity: (id: string) => void;
   onDecreaseQuantity: (id: string) => void;
   onSetQuantity: (id: string) => void;
   onUpdateLocation: (id: string) => void;
+  onUpdateThreshold: (id: string) => void;
   onDelete: (id: string) => void;
 }
 
@@ -27,6 +32,9 @@ export default function ProductList({
   adjustInputs,
   setInputs,
   locationInputs,
+  thresholdInputs,
+  locations,
+  isAdmin,
   updatingId,
   deletingId,
   isLoading,
@@ -34,10 +42,12 @@ export default function ProductList({
   onAdjustInputChange,
   onSetInputChange,
   onLocationChange,
+  onThresholdChange,
   onIncreaseQuantity,
   onDecreaseQuantity,
   onSetQuantity,
   onUpdateLocation,
+  onUpdateThreshold,
   onDelete,
 }: IProductListProps) {
   return (
@@ -49,6 +59,7 @@ export default function ProductList({
         const adjustValue = adjustInputs[product._id] || "";
         const setValue = setInputs[product._id] || "";
         const locationValue = locationInputs[product._id] ?? product.storageLocation ?? "";
+        const thresholdValue = thresholdInputs[product._id] || "";
 
         return (
           <ProductListItem
@@ -60,14 +71,19 @@ export default function ProductList({
             adjustValue={adjustValue}
             setValue={setValue}
             locationValue={locationValue}
+            locations={locations}
+            thresholdValue={thresholdValue}
+            isAdmin={isAdmin}
             onToggleDetails={() => onToggleDetails(product._id)}
             onAdjustInputChange={(value) => onAdjustInputChange(product._id, value)}
             onSetInputChange={(value) => onSetInputChange(product._id, value)}
             onLocationChange={(value) => onLocationChange(product._id, value)}
+            onThresholdChange={(value) => onThresholdChange(product._id, value)}
             onIncreaseQuantity={() => onIncreaseQuantity(product._id)}
             onDecreaseQuantity={() => onDecreaseQuantity(product._id)}
             onSetQuantity={() => onSetQuantity(product._id)}
             onUpdateLocation={() => onUpdateLocation(product._id)}
+            onUpdateThreshold={() => onUpdateThreshold(product._id)}
             onDelete={() => onDelete(product._id)}
           />
         );

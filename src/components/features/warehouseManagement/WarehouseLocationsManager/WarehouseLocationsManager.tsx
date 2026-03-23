@@ -1,0 +1,77 @@
+import { useState, type FormEvent } from "react";
+
+interface IWarehouseLocationsManagerProps {
+  locations: string[];
+  onAddLocation: (location: string) => void;
+  onRemoveLocation: (location: string) => void;
+  isUpdating: boolean;
+}
+
+const formatLocationLabel = (value: string) =>
+  value.replace(/-/g, " ").replace(/\b\w/g, (match) => match.toUpperCase());
+
+export default function WarehouseLocationsManager({
+  locations,
+  onAddLocation,
+  onRemoveLocation,
+  isUpdating,
+}: IWarehouseLocationsManagerProps) {
+  const [newLocation, setNewLocation] = useState("");
+
+  const handleAdd = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const trimmed = newLocation.trim();
+    if (!trimmed) return;
+    onAddLocation(trimmed);
+    setNewLocation("");
+  };
+
+  return (
+    <section className="bg-white p-4 md:p-6 rounded-xl shadow-md border border-amber-200">
+      <h3 className="text-lg font-semibold text-amber-900 mb-3">Locations</h3>
+      <form className="flex flex-col md:flex-row gap-3 mb-4" onSubmit={handleAdd}>
+        <input
+          type="text"
+          value={newLocation}
+          onChange={(event) => setNewLocation(event.target.value)}
+          placeholder="Add new location (e.g. aisle-3)"
+          className="w-full md:flex-1 px-3 py-2 border border-amber-300 rounded"
+          disabled={isUpdating}
+        />
+        <button
+          type="submit"
+          className="
+            bg-amber-200 px-3 py-2
+            rounded-lg border border-amber-300
+            hover:bg-amber-300 hover:shadow-md
+            transition-all duration-200
+            text-amber-900
+            disabled:opacity-60 disabled:cursor-not-allowed
+          "
+          disabled={isUpdating || !newLocation.trim()}
+        >
+          Add location
+        </button>
+      </form>
+
+      <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {locations.map((location) => (
+          <li
+            key={location}
+            className="flex items-center justify-between bg-amber-50 border border-amber-200 px-3 py-2 rounded"
+          >
+            <span className="text-amber-900 text-sm">{formatLocationLabel(location)}</span>
+            <button
+              type="button"
+              onClick={() => onRemoveLocation(location)}
+              className="text-red-700 text-xs font-medium"
+              disabled={isUpdating}
+            >
+              Remove
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}

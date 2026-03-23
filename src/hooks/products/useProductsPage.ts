@@ -15,6 +15,8 @@ import {
   apiRemoveWarehouseUser,
   apiSetActiveWarehouse,
   apiUpdateLocations,
+  apiUpdateHomeContainers,
+  apiUpdateHomeContainerTasks,
   apiUpdateWarehouseUserRole,
 } from "../../services/api/warehouseManagementApi";
 import type IProduct from "../../types/models/IProduct";
@@ -316,6 +318,39 @@ export default function useProductsPage({ user, isReady, updateUser }: UseProduc
     );
   };
 
+  const handleAddHomeContainer = async (title: string, description: string, tasks: string) => {
+    await runManageAction(
+      async () => {
+        await apiUpdateHomeContainers([{ title, description, tasks }], []);
+        await fetchWarehouseOverview();
+      },
+      "Failed to update home containers. Please try again.",
+      "Failed to add home container:"
+    );
+  };
+
+  const handleRemoveHomeContainer = async (containerId: string) => {
+    await runManageAction(
+      async () => {
+        await apiUpdateHomeContainers([], [containerId]);
+        await fetchWarehouseOverview();
+      },
+      "Failed to update home containers. Please try again.",
+      "Failed to remove home container:"
+    );
+  };
+
+  const handleUpdateHomeContainerTasks = async (containerId: string, tasks: string) => {
+    await runManageAction(
+      async () => {
+        await apiUpdateHomeContainerTasks(containerId, tasks);
+        await fetchWarehouseOverview();
+      },
+      "Failed to update home container tasks. Please try again.",
+      "Failed to update home container tasks:"
+    );
+  };
+
   const handleAddUser = async (email: string, role: UserRole) => {
     await runManageAction(
       async () => {
@@ -422,6 +457,9 @@ export default function useProductsPage({ user, isReady, updateUser }: UseProduc
     handleCreateWarehouse,
     handleAddLocation,
     handleRemoveLocation,
+    handleAddHomeContainer,
+    handleRemoveHomeContainer,
+    handleUpdateHomeContainerTasks,
     handleAddUser,
     handleUpdateUserRole,
     handleRemoveUser,

@@ -45,6 +45,13 @@ export default function NavigationBar(): JSX.Element {
             </button>
             <button
               type="button"
+              onClick={() => navigate("/warehouse/home-containers")}
+              className="theme-button px-3 h-10 rounded-lg transition-all duration-200 flex items-center"
+            >
+              Homepage Content
+            </button>
+            <button
+              type="button"
               onClick={() => navigate("/warehouse/refill-needed")}
               className="theme-button px-3 h-10 rounded-lg transition-all duration-200 flex items-center"
             >

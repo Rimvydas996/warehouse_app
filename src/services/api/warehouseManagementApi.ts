@@ -117,6 +117,53 @@ async function apiUpdateLocations(add: string[], remove: string[]) {
   }
 }
 
+async function apiUpdateHomeContainers(
+  add: { title: string; description: string; tasks: string }[],
+  remove: string[]
+) {
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await axios.patch(
+      `${API_BASE_URL}/warehouses/current/home-containers`,
+      { add, remove },
+      { headers: buildAuthHeaders(token), withCredentials: true }
+    );
+    return res.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Update home containers error:", {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+    }
+    throw error;
+  }
+}
+
+async function apiUpdateHomeContainerTasks(containerId: string, tasks: string) {
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await axios.patch(
+      `${API_BASE_URL}/warehouses/current/home-containers/${containerId}`,
+      { tasks },
+      { headers: buildAuthHeaders(token), withCredentials: true }
+    );
+    return res.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Update home container tasks error:", {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+    }
+    throw error;
+  }
+}
+
 async function apiAddWarehouseUser(email: string, role: UserRole) {
   const token = localStorage.getItem("token");
 
@@ -188,6 +235,8 @@ export {
   apiGetMyWarehouses,
   apiSetActiveWarehouse,
   apiUpdateLocations,
+  apiUpdateHomeContainers,
+  apiUpdateHomeContainerTasks,
   apiAddWarehouseUser,
   apiUpdateWarehouseUserRole,
   apiRemoveWarehouseUser,

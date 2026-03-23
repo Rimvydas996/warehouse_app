@@ -2,11 +2,7 @@ import { useAuth } from "../context/AuthContext";
 import {
   ProductsPageLayout,
   ProductsSection,
-  ProductsTabs,
-  RefillSection,
   WarehouseCreateForm,
-  WarehouseManagementPanel,
-  WarehouseSelectorCard,
 } from "../components/features";
 import { getActiveRole, isAdminRole, isManagerRole } from "../utils/products/productsPageHelpers";
 import useProductsPage from "../hooks/products/useProductsPage";
@@ -15,9 +11,7 @@ export default function ProductsPage() {
   const { user, isReady, updateUser } = useAuth();
   const {
     products,
-    warehouseOverview,
     warehouses,
-    isWarehousesLoading,
     expandedId,
     adjustInputs,
     setInputs,
@@ -25,19 +19,14 @@ export default function ProductsPage() {
     thresholdInputs,
     isLoading,
     loadError,
-    manageError,
-    isManaging,
     isCreatingWarehouse,
     showCreateWarehouse,
-    activeTab,
     updatingId,
     deletingId,
     hasProducts,
     hasWarehouse,
     locations,
-    refillItems,
     refillCount,
-    setActiveTab,
     setShowCreateWarehouse,
     handleMore,
     handleAdjustInputChange,
@@ -50,15 +39,7 @@ export default function ProductsPage() {
     handleUpdateLocation,
     handleDeleteProduct,
     handleProductCreated,
-    refreshWarehouses,
-    handleSetActiveWarehouse,
     handleCreateWarehouse,
-    handleAddLocation,
-    handleRemoveLocation,
-    handleAddUser,
-    handleUpdateUserRole,
-    handleRemoveUser,
-    handleUpdateThreshold,
     handleUpdateThresholdFromList,
   } = useProductsPage({ user, isReady, updateUser });
 
@@ -66,37 +47,38 @@ export default function ProductsPage() {
   const isManager = isManagerRole(activeRole);
   const isAdmin = isAdminRole(activeRole);
   const canCreateProducts = isManager;
+  const showHeaderCreateToggle = isAdmin && hasWarehouse;
+  const shouldShowCreateForm = !hasWarehouse || showCreateWarehouse;
 
   return (
-    <ProductsPageLayout title="Product Management">
-      {!hasWarehouse && (
-        <div className="mb-6">
+    <ProductsPageLayout
+      title="Product Management"
+      refillCount={refillCount}
+      headerActions={
+        showHeaderCreateToggle ? (
+          <button
+            type="button"
+            onClick={() => setShowCreateWarehouse((prev) => !prev)}
+            className="theme-button px-3 py-2 rounded-lg transition-all duration-200 w-full md:w-auto"
+          >
+            {showCreateWarehouse ? "Hide create warehouse" : "Create warehouse"}
+          </button>
+        ) : null
+      }
+      headerBottom={
+        shouldShowCreateForm ? (
           <WarehouseCreateForm
             onCreate={handleCreateWarehouse}
             isSubmitting={isCreatingWarehouse}
             error={manageError}
+            variant="inline"
+            showTitle={!hasWarehouse}
           />
-        </div>
-      )}
-
-      <WarehouseSelectorCard
-        warehouses={warehouses}
-        isLoading={isWarehousesLoading}
-        activeWarehouseId={user?.activeWarehouseId}
-        onSetActiveWarehouse={handleSetActiveWarehouse}
-        onRefresh={refreshWarehouses}
-      />
+        ) : null
+      }
+    >
 
       {hasWarehouse && (
-        <ProductsTabs
-          activeTab={activeTab}
-          onChange={setActiveTab}
-          showManage={isManager}
-          refillCount={refillCount}
-        />
-      )}
-
-      {activeTab === "products" && hasWarehouse && (
         <ProductsSection
           canCreateProducts={canCreateProducts}
           locations={locations}
@@ -124,31 +106,6 @@ export default function ProductsPage() {
           onUpdateLocation={handleUpdateLocation}
           onUpdateThreshold={handleUpdateThresholdFromList}
           onDelete={handleDeleteProduct}
-        />
-      )}
-
-      {activeTab === "refill" && hasWarehouse && (
-        <RefillSection isLoading={isLoading} items={refillItems} count={refillCount} />
-      )}
-
-      {activeTab === "manage" && hasWarehouse && (
-        <WarehouseManagementPanel
-          manageError={manageError}
-          warehouseOverview={warehouseOverview}
-          isAdmin={isAdmin}
-          isManager={isManager}
-          isManaging={isManaging}
-          isCreatingWarehouse={isCreatingWarehouse}
-          showCreateWarehouse={showCreateWarehouse}
-          currentUserId={user?._id}
-          onToggleCreateWarehouse={() => setShowCreateWarehouse((prev) => !prev)}
-          onCreateWarehouse={handleCreateWarehouse}
-          onAddLocation={handleAddLocation}
-          onRemoveLocation={handleRemoveLocation}
-          onAddUser={handleAddUser}
-          onUpdateRole={handleUpdateUserRole}
-          onRemoveUser={handleRemoveUser}
-          onUpdateThreshold={handleUpdateThreshold}
         />
       )}
     </ProductsPageLayout>

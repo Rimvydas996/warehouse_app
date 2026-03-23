@@ -3,6 +3,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../../context/ThemeContext";
 import { LiProduct } from "../../common";
+import WarehouseSwitcher from "../WarehouseSwitcher/WarehouseSwitcher";
 
 export default function Menu() {
   const [open, setOpen] = useState(false);
@@ -16,7 +17,7 @@ export default function Menu() {
     // ==================================
     <>
       {!open && (
-        <div className="md:hidden justify-between items-center ">
+        <div className="justify-between items-center ">
           <button className="theme-button-strong p-1 m-0 rounded-full" onClick={() => setOpen(!open)}>
             {" "}
             <svg
@@ -38,7 +39,7 @@ export default function Menu() {
         </div>
       )}
       {open && (
-        <div className="md:hidden fixed top-0 bg-gradient-to-r from-amber-800 to-amber-600 left-0 w-screen h-screen flex flex-col items-center justify-start p-4">
+        <div className="fixed top-0 bg-gradient-to-r from-amber-400 to-amber-300 left-0 w-screen h-screen flex flex-col items-center justify-start p-4 shadow-lg">
           <button
             className="theme-button-strong p-1 m-0 rounded-full self-start"
             onClick={() => setOpen(!open)}
@@ -55,9 +56,32 @@ export default function Menu() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <ul className="flex m-2 ">
-            {isAuthenticated ? (
-              <>
+          <ul className="flex flex-col m-2 gap-2 w-full">
+            {isAuthenticated && (
+              <LiProduct
+                onClick={() => {
+                  logout();
+                  setOpen(false);
+                }}
+              >
+                Logout
+              </LiProduct>
+            )}
+            {!isAuthenticated && (
+              <LiProduct
+                onClick={() => {
+                  navigate("/login");
+                  setOpen(false);
+                }}
+              >
+                Login
+              </LiProduct>
+            )}
+            {isAuthenticated && (
+              <div className="lg:hidden flex flex-col gap-2 w-full">
+                <div className="w-full">
+                  <WarehouseSwitcher />
+                </div>
                 <LiProduct
                   onClick={() => {
                     navigate("/products");
@@ -68,78 +92,40 @@ export default function Menu() {
                 </LiProduct>
                 <LiProduct
                   onClick={() => {
-                    logout();
+                    navigate("/warehouse/manage");
                     setOpen(false);
                   }}
                 >
-                  Logout
+                  Manage Warehouse
                 </LiProduct>
-              </>
-            ) : (
-              !isAuthenticated && (
-                <>
-                  <LiProduct
-                    onClick={() => {
-                      navigate("/register");
-                      setOpen(false);
-                    }}
-                  >
-                    Register
-                  </LiProduct>
-                  <LiProduct
-                    onClick={() => {
-                      navigate("/login");
-                      setOpen(false);
-                    }}
-                  >
-                    Login
-                  </LiProduct>
-                </>
-              )
+                <LiProduct
+                  onClick={() => {
+                    navigate("/warehouse/refill-needed");
+                    setOpen(false);
+                  }}
+                >
+                  Refill Needed
+                </LiProduct>
+              </div>
             )}
           </ul>
-          <select
-            value={theme}
-            onChange={(event) => setTheme(event.target.value as typeof theme)}
-            className="theme-select mt-4"
-          >
-            {themes.map((themeOption) => (
-              <option key={themeOption} value={themeOption}>
-                {themeOption}
-              </option>
-            ))}
-          </select>
+          <div className="w-full mt-4">
+            <label className="theme-label text-sm font-medium mb-2 block">Theme</label>
+            <select
+              value={theme}
+              onChange={(event) => setTheme(event.target.value as typeof theme)}
+              className="theme-button w-full px-4 h-10 rounded-lg"
+            >
+              {themes.map((themeOption) => (
+                <option key={themeOption} value={themeOption}>
+                  {themeOption}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       )}
-      {/* ================================== // Desktop // ================================== */}
-      <div className="hidden md:flex justify-between items-center ">
-        <ul className="flex m-2 ">
-          {isAuthenticated ? (
-            <>
-              <LiProduct onClick={() => navigate("/products")}>Products</LiProduct>
-              <LiProduct onClick={() => logout()}>Logout</LiProduct>
-            </>
-          ) : (
-            !isAuthenticated && (
-              <>
-                <LiProduct onClick={() => navigate("/register")}>Register</LiProduct>
-                <LiProduct onClick={() => navigate("/login")}>Login</LiProduct>
-              </>
-            )
-          )}
-        </ul>
-        <select
-          value={theme}
-          onChange={(event) => setTheme(event.target.value as typeof theme)}
-          className="theme-select"
-        >
-          {themes.map((themeOption) => (
-            <option key={themeOption} value={themeOption}>
-              {themeOption}
-            </option>
-          ))}
-        </select>
-      </div>
+      {/* Desktop menu removed; burger is used on all screen sizes */}
     </>
   );
 }

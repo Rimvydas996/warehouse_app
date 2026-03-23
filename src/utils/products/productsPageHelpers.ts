@@ -1,6 +1,7 @@
 import type IProduct from "../../types/models/IProduct";
 import type { IWarehouseMembership } from "../../types/models/IWarehouse";
-import type IUser, { UserRole } from "../../types/models/IUser";
+import type IUser from "../../types/models/IUser";
+import type { UserRole } from "../../types/models/IUser";
 
 const getAdjustAmount = (inputs: Record<string, string>, id: string) => {
   const rawValue = inputs[id];

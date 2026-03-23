@@ -5,14 +5,7 @@ interface IHomeInfoCardProps {
 
 export default function HomeInfoCard({ title, description }: IHomeInfoCardProps) {
   return (
-    <div
-      className="
-        bg-white p-6 rounded-xl
-        shadow-lg hover:shadow-xl
-        transition-all duration-300
-        border border-amber-200
-      "
-    >
+    <div className="theme-card theme-card-elevated p-6 transition-all duration-300 hover:shadow-xl">
       <h2
         className="
           text-2xl font-semibold text-amber-900

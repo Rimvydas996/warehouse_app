@@ -6,7 +6,7 @@ import { LiProduct } from "../../common";
 
 export default function Menu() {
   const [open, setOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme, themes } = useTheme();
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ export default function Menu() {
         </div>
       )}
       {open && (
-        <div className="md:hidden fixed top-0 bg-amber-100 dark:bg-gradient-to-r from-amber-800 to-amber-600 left-0 w-screen h-screen flex flex-col items-center justify-start p-4">
+        <div className="md:hidden fixed top-0 bg-gradient-to-r from-amber-800 to-amber-600 left-0 w-screen h-screen flex flex-col items-center justify-start p-4">
           <button
             className="bg-amber-600 p-1 m-0 rounded-full self-start"
             onClick={() => setOpen(!open)}
@@ -98,10 +98,17 @@ export default function Menu() {
               )
             )}
           </ul>
-          <button className="bg-amber-900 p-1 m-0 rounded-full" onClick={toggleTheme}>
-            {" "}
-            {theme === "dark" ? "🌞" : "🌙"}
-          </button>
+          <select
+            value={theme}
+            onChange={(event) => setTheme(event.target.value as typeof theme)}
+            className="theme-select mt-4"
+          >
+            {themes.map((themeOption) => (
+              <option key={themeOption} value={themeOption}>
+                {themeOption}
+              </option>
+            ))}
+          </select>
         </div>
       )}
       {/* ================================== // Desktop // ================================== */}
@@ -121,9 +128,17 @@ export default function Menu() {
             )
           )}
         </ul>
-        <button className="bg-gray-600 p-1 m-0 rounded-full" onClick={toggleTheme}>
-          {theme === "dark" ? "🌞" : "🌙"}
-        </button>
+        <select
+          value={theme}
+          onChange={(event) => setTheme(event.target.value as typeof theme)}
+          className="theme-select"
+        >
+          {themes.map((themeOption) => (
+            <option key={themeOption} value={themeOption}>
+              {themeOption}
+            </option>
+          ))}
+        </select>
       </div>
     </>
   );

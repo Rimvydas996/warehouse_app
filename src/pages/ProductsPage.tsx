@@ -423,7 +423,7 @@ export default function ProductsPage() {
         )}
 
         {warehouses.length > 0 && (
-          <div className="bg-white p-4 md:p-6 rounded-xl shadow-md border border-amber-200 mb-6">
+          <div className="theme-card p-4 md:p-6 mb-6">
             <h2 className="text-lg font-semibold text-amber-900 mb-2">Your warehouses</h2>
             {isWarehousesLoading ? (
               <LoadingIndicator label="Loading warehouses..." />
@@ -432,7 +432,7 @@ export default function ProductsPage() {
                 <select
                   value={user?.activeWarehouseId ?? ""}
                   onChange={(event) => handleSetActiveWarehouse(event.target.value)}
-                  className="w-full md:flex-1 px-3 py-2 border border-amber-300 rounded bg-white"
+                  className="w-full md:flex-1 px-3 py-2 rounded theme-input"
                 >
                   <option value="" disabled>
                     Select active warehouse
@@ -446,14 +446,7 @@ export default function ProductsPage() {
                 <button
                   type="button"
                   onClick={refreshWarehouses}
-                  className="
-                    bg-amber-200 px-3 py-2
-                    rounded-lg border border-amber-300
-                    hover:bg-amber-300 hover:shadow-md
-                    transition-all duration-200
-                    text-amber-900
-                    w-full md:w-auto
-                  "
+                  className="theme-button px-3 py-2 rounded-lg transition-all duration-200 w-full md:w-auto"
                 >
                   Refresh
                 </button>
@@ -467,10 +460,8 @@ export default function ProductsPage() {
             <button
               type="button"
               onClick={() => setActiveTab("products")}
-              className={`px-4 py-2 rounded-lg border transition-all duration-200 ${
-                activeTab === "products"
-                  ? "bg-amber-900 text-amber-50 border-amber-900"
-                  : "bg-amber-200 text-amber-900 border-amber-300"
+              className={`theme-tab px-4 py-2 rounded-lg border transition-all duration-200 ${
+                activeTab === "products" ? "theme-tab-active" : ""
               }`}
             >
               Products
@@ -478,10 +469,8 @@ export default function ProductsPage() {
             <button
               type="button"
               onClick={() => setActiveTab("refill")}
-              className={`px-4 py-2 rounded-lg border transition-all duration-200 ${
-                activeTab === "refill"
-                  ? "bg-amber-900 text-amber-50 border-amber-900"
-                  : "bg-amber-200 text-amber-900 border-amber-300"
+              className={`theme-tab px-4 py-2 rounded-lg border transition-all duration-200 ${
+                activeTab === "refill" ? "theme-tab-active" : ""
               }`}
             >
               <span className="inline-flex items-center gap-2">
@@ -497,10 +486,8 @@ export default function ProductsPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab("manage")}
-                className={`px-4 py-2 rounded-lg border transition-all duration-200 ${
-                  activeTab === "manage"
-                    ? "bg-amber-900 text-amber-50 border-amber-900"
-                    : "bg-amber-200 text-amber-900 border-amber-300"
+                className={`theme-tab px-4 py-2 rounded-lg border transition-all duration-200 ${
+                  activeTab === "manage" ? "theme-tab-active" : ""
                 }`}
               >
                 Manage Warehouse
@@ -514,7 +501,7 @@ export default function ProductsPage() {
             {canCreateProducts ? (
               <AddProductForm onProductCreated={handleProductCreated} locations={locations} />
             ) : (
-              <div className="bg-white p-4 md:p-6 rounded-xl shadow-md border border-amber-200 mb-6">
+              <div className="theme-card p-4 md:p-6 mb-6">
                 <p className="text-amber-900 text-sm">
                   Only admins and managers can add new items.
                 </p>
@@ -581,10 +568,7 @@ export default function ProductsPage() {
                   <li className="text-amber-800 text-sm">No items need refilling.</li>
                 ) : (
                   refillItems.map((product) => (
-                    <li
-                      key={product._id}
-                      className="bg-white border border-amber-200 rounded-lg px-3 py-2"
-                    >
+                    <li key={product._id} className="theme-subtle px-3 py-2">
                       <p className="text-amber-900 font-medium">{product.title}</p>
                       <p className="text-amber-700 text-xs">
                         Stock: {product.quantity} | Threshold: {product.refillThreshold ?? 0}
@@ -613,7 +597,7 @@ export default function ProductsPage() {
               </div>
             ) : (
               <>
-                <div className="bg-white p-4 md:p-6 rounded-xl shadow-md border border-amber-200">
+                <div className="theme-card p-4 md:p-6">
                   <h2 className="text-xl font-semibold text-amber-900">
                     {warehouseOverview.warehouse.name}
                   </h2>
@@ -622,17 +606,11 @@ export default function ProductsPage() {
                   </p>
                 </div>
                 {isAdmin && (
-                  <div className="bg-white p-4 md:p-6 rounded-xl shadow-md border border-amber-200">
+                  <div className="theme-card p-4 md:p-6">
                     <button
                       type="button"
                       onClick={() => setShowCreateWarehouse((prev) => !prev)}
-                      className="
-                        bg-amber-200 px-3 py-2
-                        rounded-lg border border-amber-300
-                        hover:bg-amber-300 hover:shadow-md
-                        transition-all duration-200
-                        text-amber-900
-                      "
+                      className="theme-button px-3 py-2 rounded-lg transition-all duration-200"
                     >
                       {showCreateWarehouse ? "Hide create warehouse" : "Create new warehouse"}
                     </button>

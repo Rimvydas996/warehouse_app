@@ -3,7 +3,7 @@ import type IInputProps from "../../../types/models/IInput";
 const Input = ({ id, type, placeholder, value, onChange, label }: IInputProps): JSX.Element => {
   return (
     <div className="space-y-2 w-full">
-      <label htmlFor={id} className="block text-sm font-medium text-amber-900">
+      <label htmlFor={id} className="block text-sm font-medium theme-label">
         {label}
       </label>
       <input
@@ -12,7 +12,7 @@ const Input = ({ id, type, placeholder, value, onChange, label }: IInputProps): 
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full px-4 py-3 rounded-lg border-2 border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent placeholder:text-amber-300 transition duration-200 text-amber-900"
+        className="w-full px-4 py-3 theme-input focus:border-transparent placeholder:text-amber-300 transition duration-200"
       />
     </div>
   );

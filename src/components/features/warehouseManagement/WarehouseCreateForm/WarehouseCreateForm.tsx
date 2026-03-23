@@ -22,7 +22,7 @@ export default function WarehouseCreateForm({
   };
 
   return (
-    <div className="bg-white p-4 md:p-6 rounded-xl shadow-md border border-amber-200">
+    <div className="theme-card p-4 md:p-6">
       <h2 className="text-xl font-semibold text-amber-900 mb-3">Create Warehouse</h2>
       <form className="flex flex-col md:flex-row gap-3" onSubmit={handleSubmit}>
         <input
@@ -30,7 +30,7 @@ export default function WarehouseCreateForm({
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder="Warehouse name"
-          className="w-full md:flex-1 px-3 py-2 border border-amber-300 rounded"
+          className="w-full md:flex-1 px-3 py-2 rounded theme-input"
           disabled={isSubmitting}
         />
         <SubmitButton

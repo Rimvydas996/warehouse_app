@@ -39,7 +39,7 @@ export default function RegisterForm(): JSX.Element {
           Register to Warehouse
         </h2>
 
-        <div className="bg-white p-8 rounded-xl shadow-lg border border-amber-200 w-full">
+        <div className="theme-card theme-card-elevated p-8 w-full">
           <Form onSubmit={registerHandler}>
             <Input
               id="email"

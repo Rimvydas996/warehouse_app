@@ -50,15 +50,7 @@ export default function ProductListItem({
   onDelete,
 }: IProductListItemProps) {
   return (
-    <li
-      className="
-        bg-white p-3 md:p-4 rounded-xl
-        shadow-md hover:shadow-lg
-        transition-all duration-200
-        border border-amber-200
-        grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 items-center
-      "
-    >
+    <li className="theme-card p-3 md:p-4 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 items-center transition-all duration-200 hover:shadow-lg">
       <span className="text-base md:text-lg text-left font-medium col-span-2 text-amber-900">
         {product.title}
       </span>

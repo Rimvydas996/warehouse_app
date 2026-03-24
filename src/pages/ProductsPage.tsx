@@ -20,6 +20,9 @@ export default function ProductsPage() {
         showCreateWarehouse,
         updatingId,
         deletingId,
+        filters,
+        filteredProducts,
+        hasActiveFilters,
         hasProducts,
         hasWarehouse,
         locations,
@@ -30,6 +33,7 @@ export default function ProductsPage() {
         handleSetInputChange,
         handleLocationChange,
         handleThresholdChange,
+        handleFilterChange,
         handleIncreaseQuantity,
         handleDecreaseQuantity,
         handleSetQuantity,
@@ -44,6 +48,7 @@ export default function ProductsPage() {
     const isManager = isManagerRole(activeRole);
     const isAdmin = isAdminRole(activeRole);
     const canCreateProducts = isManager;
+    const canDeleteProducts = isManager;
     const showHeaderCreateToggle = isAdmin && hasWarehouse;
     const shouldShowCreateForm = !hasWarehouse || showCreateWarehouse;
 
@@ -81,13 +86,16 @@ export default function ProductsPage() {
                     isLoading={isLoading}
                     loadError={loadError}
                     hasProducts={hasProducts}
-                    products={products}
+                    hasActiveFilters={hasActiveFilters}
+                    filters={filters}
+                    products={filteredProducts}
                     expandedId={expandedId}
                     adjustInputs={adjustInputs}
                     setInputs={setInputs}
                     locationInputs={locationInputs}
                     thresholdInputs={thresholdInputs}
                     isAdmin={isAdmin}
+                    canDeleteProducts={canDeleteProducts}
                     updatingId={updatingId}
                     deletingId={deletingId}
                     onProductCreated={handleProductCreated}
@@ -96,6 +104,7 @@ export default function ProductsPage() {
                     onSetInputChange={handleSetInputChange}
                     onLocationChange={handleLocationChange}
                     onThresholdChange={handleThresholdChange}
+                    onFilterChange={handleFilterChange}
                     onIncreaseQuantity={handleIncreaseQuantity}
                     onDecreaseQuantity={handleDecreaseQuantity}
                     onSetQuantity={handleSetQuantity}

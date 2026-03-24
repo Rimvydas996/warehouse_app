@@ -10,6 +10,7 @@ interface IProductListProps {
     thresholdInputs: Record<string, string>;
     locations: string[];
     isAdmin: boolean;
+    canDeleteProducts: boolean;
     updatingId: string | null;
     deletingId: string | null;
     isLoading: boolean;
@@ -35,6 +36,7 @@ export default function ProductList({
     thresholdInputs,
     locations,
     isAdmin,
+    canDeleteProducts,
     updatingId,
     deletingId,
     isLoading,
@@ -74,6 +76,7 @@ export default function ProductList({
                         locations={locations}
                         thresholdValue={thresholdValue}
                         isAdmin={isAdmin}
+                        canDeleteProducts={canDeleteProducts}
                         onToggleDetails={() => onToggleDetails(product._id)}
                         onAdjustInputChange={(value) => onAdjustInputChange(product._id, value)}
                         onSetInputChange={(value) => onSetInputChange(product._id, value)}

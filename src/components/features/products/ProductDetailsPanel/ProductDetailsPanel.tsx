@@ -10,6 +10,7 @@ interface IProductDetailsPanelProps {
     locations: string[];
     thresholdValue: string;
     isAdmin: boolean;
+    canDeleteProducts: boolean;
     isUpdating: boolean;
     isDeleting: boolean;
     onAdjustInputChange: (value: string) => void;
@@ -32,6 +33,7 @@ export default function ProductDetailsPanel({
     locations,
     thresholdValue,
     isAdmin,
+    canDeleteProducts,
     isUpdating,
     isDeleting,
     onAdjustInputChange,
@@ -148,7 +150,9 @@ export default function ProductDetailsPanel({
                     <span className='theme-muted text-xs self-center'>Current: {product.refillThreshold ?? 0}</span>
                 </div>
             )}
-            <ProductDeleteButton isDeleting={isDeleting} isUpdating={isUpdating} onDelete={onDelete} />
+            {canDeleteProducts && (
+                <ProductDeleteButton isDeleting={isDeleting} isUpdating={isUpdating} onDelete={onDelete} />
+            )}
         </div>
     );
 }

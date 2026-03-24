@@ -23,6 +23,15 @@ export default function NavigationBar(): JSX.Element {
             >
                 Warehouse
             </h3>
+            {!hasWarehouse && user && (
+                <button
+                    type='button'
+                    onClick={() => navigate('/warehouse/manage')}
+                    className='theme-button px-3 h-10 rounded-lg transition-all duration-200 flex items-center'
+                >
+                    Manage Warehouse
+                </button>
+            )}
             <div className='flex flex-col md:flex-row md:items-center gap-3 w-full md:w-auto'>
                 <div className='hidden lg:block'>
                     <WarehouseSwitcher />

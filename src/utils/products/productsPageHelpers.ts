@@ -22,6 +22,26 @@ const getRefillItems = (products: IProduct[]) => {
     return { items, count: items.length };
 };
 
+const normalizeFilterValue = (value: string) => value.trim().toLowerCase();
+
+interface IProductFilters {
+    title: string;
+    location: string;
+}
+
+const filterProducts = (products: IProduct[], filters: IProductFilters) => {
+    const titleFilter = normalizeFilterValue(filters.title);
+    const locationFilter = normalizeFilterValue(filters.location);
+
+    return products.filter((product) => {
+        const matchesTitle = !titleFilter || normalizeFilterValue(product.title).includes(titleFilter);
+        const matchesLocation =
+            !locationFilter || normalizeFilterValue(product.storageLocation).includes(locationFilter);
+
+        return matchesTitle && matchesLocation;
+    });
+};
+
 const getActiveRole = (user: IUser | null, memberships: IWarehouseMembership[]) => {
     const activeMembership = memberships.find((entry) => entry.isActive);
     return activeMembership?.role ?? user?.role;
@@ -31,4 +51,5 @@ const isManagerRole = (role?: UserRole | null) => role === 'admin' || role === '
 
 const isAdminRole = (role?: UserRole | null) => role === 'admin';
 
-export { getAdjustAmount, getRefillItems, getActiveRole, isManagerRole, isAdminRole };
+export { filterProducts, getAdjustAmount, getRefillItems, getActiveRole, isManagerRole, isAdminRole };
+export type { IProductFilters };

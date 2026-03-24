@@ -13,6 +13,7 @@ interface IProductListItemProps {
     locations: string[];
     thresholdValue: string;
     isAdmin: boolean;
+    canDeleteProducts: boolean;
     onToggleDetails: () => void;
     onAdjustInputChange: (value: string) => void;
     onSetInputChange: (value: string) => void;
@@ -37,6 +38,7 @@ export default function ProductListItem({
     locations,
     thresholdValue,
     isAdmin,
+    canDeleteProducts,
     onToggleDetails,
     onAdjustInputChange,
     onSetInputChange,
@@ -68,6 +70,7 @@ export default function ProductListItem({
                     locations={locations}
                     thresholdValue={thresholdValue}
                     isAdmin={isAdmin}
+                    canDeleteProducts={canDeleteProducts}
                     isUpdating={isUpdating}
                     isDeleting={isDeleting}
                     onAdjustInputChange={onAdjustInputChange}

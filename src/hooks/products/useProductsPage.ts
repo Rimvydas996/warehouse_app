@@ -23,7 +23,12 @@ import type IProduct from '../../types/models/IProduct';
 import type { IWarehouseMembership, IWarehouseOverview } from '../../types/models/IWarehouse';
 import type { UserRole } from '../../types/models/IUser';
 import type IUser from '../../types/models/IUser';
-import { getAdjustAmount, getRefillItems } from '../../utils/products/productsPageHelpers';
+import {
+    filterProducts,
+    getAdjustAmount,
+    getRefillItems,
+    type IProductFilters,
+} from '../../utils/products/productsPageHelpers';
 
 interface UseProductsPageParams {
     user: IUser | null;
@@ -50,6 +55,10 @@ export default function useProductsPage({ user, isReady, updateUser }: UseProduc
     const [activeTab, setActiveTab] = useState<'products' | 'manage' | 'refill'>('products');
     const [updatingId, setUpdatingId] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [filters, setFilters] = useState<IProductFilters>({
+        title: '',
+        location: '',
+    });
 
     useEffect(() => {
         if (!isReady) return;
@@ -139,6 +148,10 @@ export default function useProductsPage({ user, isReady, updateUser }: UseProduc
 
     const handleThresholdChange = (id: string, value: string) => {
         setThresholdInputs((prev) => ({ ...prev, [id]: value }));
+    };
+
+    const handleFilterChange = (key: keyof IProductFilters, value: string) => {
+        setFilters((prev) => ({ ...prev, [key]: value }));
     };
 
     const handleIncreaseQuantity = async (id: string) => {
@@ -409,9 +422,12 @@ export default function useProductsPage({ user, isReady, updateUser }: UseProduc
     const hasWarehouse = Boolean(user?.activeWarehouseId);
     const { items: refillItems, count: refillCount } = getRefillItems(products);
     const locations = warehouseOverview?.warehouse?.locations ?? [];
+    const filteredProducts = filterProducts(products, filters);
+    const hasActiveFilters = Object.values(filters).some((value) => value.trim() !== '');
 
     return {
         products,
+        filteredProducts,
         warehouseOverview,
         warehouses,
         isWarehousesLoading,
@@ -429,6 +445,8 @@ export default function useProductsPage({ user, isReady, updateUser }: UseProduc
         activeTab,
         updatingId,
         deletingId,
+        filters,
+        hasActiveFilters,
         hasProducts,
         hasWarehouse,
         locations,
@@ -441,6 +459,7 @@ export default function useProductsPage({ user, isReady, updateUser }: UseProduc
         handleSetInputChange,
         handleLocationChange,
         handleThresholdChange,
+        handleFilterChange,
         handleIncreaseQuantity,
         handleDecreaseQuantity,
         handleSetQuantity,

@@ -1,1 +1,1 @@
-export { default } from "./WarehouseUsersManager";
+export { default } from './WarehouseUsersManager';

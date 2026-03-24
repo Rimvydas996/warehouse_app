@@ -1,1 +1,1 @@
-export { default } from "./LiProduct";
+export { default } from './LiProduct';

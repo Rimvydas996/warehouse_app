@@ -1,1 +1,1 @@
-export { default } from "./HomeInfoCard";
+export { default } from './HomeInfoCard';

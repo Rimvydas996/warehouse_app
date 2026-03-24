@@ -1,1 +1,1 @@
-export { default } from "./AddProductForm";
+export { default } from './AddProductForm';

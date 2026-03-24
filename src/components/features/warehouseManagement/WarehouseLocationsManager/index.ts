@@ -1,1 +1,1 @@
-export { default } from "./WarehouseLocationsManager";
+export { default } from './WarehouseLocationsManager';

@@ -1,14 +1,14 @@
-import axios, { AxiosError } from "axios";
-import ILoginResponse from "../../types/api/ILoginResponse";
-import ICredentials from "../../types/api/ICredentials";
-import { API_BASE_URL } from "../../config/api.config";
+import axios, { AxiosError } from 'axios';
+import ILoginResponse from '../../types/api/ILoginResponse';
+import ICredentials from '../../types/api/ICredentials';
+import { API_BASE_URL } from '../../config/api.config';
 
 async function apiLogin(submittedData: ICredentials): Promise<ILoginResponse | false> {
     try {
         const response = await axios.post(`${API_BASE_URL}/auth/login`, submittedData, {
             headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
             withCredentials: true,
         });
@@ -18,7 +18,7 @@ async function apiLogin(submittedData: ICredentials): Promise<ILoginResponse | f
         }
     } catch (error) {
         if (error instanceof AxiosError) {
-            console.error("Login error details:", {
+            console.error('Login error details:', {
                 message: error.message,
                 status: error.response?.status,
                 data: error.response?.data,
@@ -32,8 +32,8 @@ async function apiRegister(submittedData: ICredentials) {
     try {
         const response = await axios.post(`${API_BASE_URL}/auth/register`, submittedData, {
             headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
             withCredentials: true,
         });
@@ -42,7 +42,7 @@ async function apiRegister(submittedData: ICredentials) {
         }
     } catch (error) {
         if (error instanceof AxiosError) {
-            console.error("Register error details:", {
+            console.error('Register error details:', {
                 message: error.message,
                 status: error.response?.status,
                 data: error.response?.data,
@@ -55,9 +55,9 @@ async function apiRegister(submittedData: ICredentials) {
 }
 
 async function apiUpdateThemePreference(themePreference: string) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) {
-        throw new Error("Authentication token missing");
+        throw new Error('Authentication token missing');
     }
     try {
         const response = await axios.patch(
@@ -65,16 +65,16 @@ async function apiUpdateThemePreference(themePreference: string) {
             { themePreference },
             {
                 headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-            }
+            },
         );
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            console.error("Theme update error details:", {
+            console.error('Theme update error details:', {
                 message: error.message,
                 status: error.response?.status,
                 data: error.response?.data,

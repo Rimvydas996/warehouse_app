@@ -1,1 +1,1 @@
-export { default } from "./WarehouseHomeContainersManager";
+export { default } from './WarehouseHomeContainersManager';

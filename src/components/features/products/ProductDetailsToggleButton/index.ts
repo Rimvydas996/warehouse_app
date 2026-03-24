@@ -1,1 +1,1 @@
-export { default } from "./ProductDetailsToggleButton";
+export { default } from './ProductDetailsToggleButton';

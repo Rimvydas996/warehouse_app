@@ -13,13 +13,13 @@
 - Follow single responsibility principle
 - Keep components small and focused
 - Use proper component folder structure:
-  ```
-  ComponentName/
-  ├── ComponentName.tsx
-  ├── ComponentName.styles.ts  (if using styled-components)
-  ├── ComponentName.test.tsx
-  └── index.ts
-  ```
+    ```
+    ComponentName/
+    ├── ComponentName.tsx
+    ├── ComponentName.styles.ts  (if using styled-components)
+    ├── ComponentName.test.tsx
+    └── index.ts
+    ```
 
 ## 3. Naming Conventions
 

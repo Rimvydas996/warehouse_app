@@ -1,1 +1,1 @@
-export { default } from "./WarehouseProductsThresholds";
+export { default } from './WarehouseProductsThresholds';

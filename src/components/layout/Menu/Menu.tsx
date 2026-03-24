@@ -68,14 +68,24 @@ export default function Menu() {
                             </LiProduct>
                         )}
                         {!isAuthenticated && (
-                            <LiProduct
-                                onClick={() => {
-                                    navigate('/login');
-                                    setOpen(false);
-                                }}
-                            >
-                                Login
-                            </LiProduct>
+                            <>
+                                <LiProduct
+                                    onClick={() => {
+                                        navigate('/login');
+                                        setOpen(false);
+                                    }}
+                                >
+                                    Login
+                                </LiProduct>
+                                <LiProduct
+                                    onClick={() => {
+                                        navigate('/register');
+                                        setOpen(false);
+                                    }}
+                                >
+                                    Register
+                                </LiProduct>
+                            </>
                         )}
                         {isAuthenticated && (
                             <div className='lg:hidden flex flex-col gap-2 w-full'>

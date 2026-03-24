@@ -1,1 +1,1 @@
-export { default } from "./WarehouseCreateForm";
+export { default } from './WarehouseCreateForm';

@@ -1,1 +1,1 @@
-export { default } from "./WarehouseManagementPanel";
+export { default } from './WarehouseManagementPanel';

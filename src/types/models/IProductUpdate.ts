@@ -1,5 +1,5 @@
 export interface IProductUpdatePayload {
-  readonly quantity?: number;
-  readonly storageLocation?: string;
-  readonly refillThreshold?: number;
+    readonly quantity?: number;
+    readonly storageLocation?: string;
+    readonly refillThreshold?: number;
 }

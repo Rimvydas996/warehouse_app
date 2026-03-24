@@ -1,1 +1,1 @@
-export { default } from "./WarehouseSwitcher";
+export { default } from './WarehouseSwitcher';

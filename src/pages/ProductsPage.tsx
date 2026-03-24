@@ -6,7 +6,6 @@ import useProductsPage from '../hooks/products/useProductsPage';
 export default function ProductsPage() {
     const { user, isReady, updateUser } = useAuth();
     const {
-        products,
         warehouses,
         expandedId,
         adjustInputs,
